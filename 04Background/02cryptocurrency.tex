@@ -1,0 +1,26 @@
+\subsection{Cryptocurrency}
+% 
+Merriam-Webster dictionary defines cryptocurrency as a \textit{`form of currency that only exists digitally, that usually has no central issuing or regulating authority but instead uses a decentralized system to record transactions and manage the issuance of new units, and that relies on cryptography to prevent counterfeiting and fraudulent transactions''} \footnotemark.
+% 
+\footnotetext{https://www.merriam-webster.com/dictionary/cryptocurrency, accessed 27-03-2018}
+% 
+
+Digital currency means, that we can only access it in a digital world. this is opposed to fiat currencies, where have both physical representation of the currency (coins and notes) and digital representation (money in the bank). Technology of cryptography assures that the currency will only be used in the intended way. Fraud cases, such as producing additional fake currency, double spending or unauthorised transfer need to be prevented. With physical cash, measures can be taken to prevent tampering with the notes and coins, such as watermarks, special print or holograms can be used. In digital world, these measures need to be enforceable and verifiable by the computer.
+
+There is only a handful of formal definitions of cryptocurrency. One of such definitions was written by Czech researcher Jan Lansky. He identifies cryptography as a necessary part of the system \cite{Lansky2018PossibleCryptocurrencies}:
+\begin{enumerate}[noitemsep]
+    \item The system does not require a central authority, distributed entities achieve consensus on its state.
+    \item The system keeps an overview of cryptocurrency units and their ownership.
+    \item The system defines whether new cryptocurrency units can be created. If new cryptocurrency units can  be  created,  the  system  defines  the  circumstances  of  their  origin  and  how  to  determine  the ownership of these new units.
+    \item Ownership of cryptocurrency units can be proved exclusively cryptographically.
+    \item The system allows transactions to be performed in  which ownership of the cryptographic units is changed. A transaction statement can only be issued by an entity proving the current ownership of these units.
+    \item If  two  different  instructions  for  changing  the  ownership  of the  same  cryptographic  units  are simultaneously entered, the system performs at most one of them.
+\end{enumerate}
+
+Public-key encryption and hashing are two mostly used cryptographic concepts used in cryptocurrencies. In Bitcoin and some Bitcoin-inspired currencies, hashing is used to maintain a consensus over the network's state and public-key cryptography is used to prove the ownership of the cryptocurrency. However, this is not true for all currencies (for example Fawkescoin, where only hashing is used for both \cite{Bonneau2014FawkescoinCryptography}.
+
+But cryptocurrency was not entering a blue ocean upon its inception. Today, most nations have a generally accepted currency, ususally issued by central bank. This system, however, has certain limitations. The main drawback is virtually unlimited supply of the currency. Government can issue more money, as it deems necessary. The value of a fiat currency can therefore decrease drastically (e.g. the value of Zimbabwean dollar dropped by hundreds of percents in 2006 \footnotemark ). Secondary, the government could use it's ability to control the currency to influence anti-governmental organisations or groups by limiting their access to their funds. This can be a problem for whistle-blower organisations (such as WikiLeaks) or for freedom movements in repressive regimes.
+% 
+\footnotetext{https://www.nytimes.com/2006/05/02/world/africa/02zimbabwe.html, accessed 28-03-18}
+
+Cryptocurrency overcomes these problems, since there is no central authority, that could control the currency. Every user of the currency can participate in the consensus negotiation process. The issue of units of the currency is controlled by the system in a well-defined and expectable manner. The trust in the central bank is thus replaced by trust in the cryptocurrency. In the next section we will explore how blockchain enables this decentralisation.
