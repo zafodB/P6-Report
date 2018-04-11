@@ -1,0 +1,37 @@
+\subsection{Ethereum}
+
+Ethereum is a decentralised computing platform, that runs small programs called \textit{smart contracts}. It builds on similar concepts as Bitcoin, such as blockchain and consensus based on proof-of-work. Smart contracts are written in a JavaScript-like language Solidiy and are run by Ethereum Virtual Machine. Ethereum was proposed in 2013 by cryptocurrency researcher Vitalik Buterin and was launched in an \acrlong{ico}\footnotemark  in 2014. 
+% 
+\footnotetext{In an \acrfull{ico} a small percentage of cryptocurrency is sold to a small percentage of backers in a capital-raising process. \url{https://www.investopedia.com/terms/i/initial-coin-offering-ico.asp}, accessed 10-04-2018}
+% 
+It is currently developed by a Swiss non-profit organisation \textit{Ethereum Foundation}.\footnotemark
+% 
+\footnotetext{\url{https://www.ethereum.org/foundation}, accessed 10-04-2018}
+
+\paragraph{Principle of operation}
+While in Bitcoin, the blockchain only keeps track of unspent transaction outputs, Ethereum blockchain is more complex. It is better described as ``\textit{a state machine , where the distributed nodes maintain a shared view of a global state}'' \cite{Tikhomirov2018Ethereum:Perspectives}. Ethereum users issue transactions, which are distributed among the nodes and which change the state of said state machine. Users can make transactions for one of the following reasons \cite{Atzei2017ASoK}:
+\begin{itemize}[noitemsep]
+    \item Create a smart contract.
+    \item Invoke a function of a smart contract.
+    \item Transfer ether to a smart contract or to another user.
+\end{itemize}
+
+Since Solidity is a Turing complete language \cite{Tikhomirov2018Ethereum:Perspectives, Atzei2017ASoK, Dannen2017IntroducingSolidity}, smart contracts could possibly perform wide variety of computations. However, this has limited use in practice. Every time a transaction invokes a smart contract function, all nodes that observed this transaction, will run the function of the smart contract at once. This redundancy is a desired feature of a decentralised computing platform, such as Ethereum \cite{EthereumCommunityEthereumDocumentation}, but could lead to a lot of wasted resources, if large quantities of useless computations are to be performed on many nodes at the same time.
+
+To prevent \acrfull{dos} attacks caused by smart contracts containing endless loops or very intense computations, there is a price associated with every atomic instruction -- \textit{gas}. When a transaction is made, it must specify the maximum amount of gas that can be used to compute the code of a smart contract. The price of gas is determined by the free market and gas needs to be purchased at the time when transaction is made \cite{EthereumCommunityEthereumDocumentation}. If an attacker was to invoke an endless loop in a smart contract, the loop would only execute while having enough gas to do so. When a contract runs out of gas, any changes made by the contract are reverted, but the gas is not returned to the owner. To spam the network with computationally intense transactions, attacker would need to purchase high amount of gas and the attack will become too expensive \cite[p.5]{Atzei2017ASoK}.
+
+\paragraph{Proof of work}
+Similarly as Bitcoin, Ethereum uses proof-of-work to reach consensus. Nodes verify incoming transactions and include them together in a block. This block is then hashed using Ethash, a memory-intensive hash function. The hash of the block needs to be below target value to be considered valid. Similarly as in Bitcoin, this process is called mining. The target value is adjusted regularly to keep average block production speed constant \cite{Tikhomirov2018Ethereum:Perspectives}. A memory intensive hash function was chosen to target \acrshort{gpu} as the main mining hardware. This was in order to avoid high barriers for entry, since \acrshort{gpu} market segment is mainly targeted at other areas, such as gaming or high-performance computing, and therefore powerful hardware is already available at the market\footnotemark.
+% 
+\footnotetext{In Bitcoin and other currencies, specialised mining hardware, also referred to as \acrfull{asic} is mainly used for Bitcoin mining. The cost of such hardware and economies of scale make it difficult for small miners to enter the market \cite{Tikhomirov2018Ethereum:Perspectives}, therefore weakening one of the main advantages of Bitcoin -- decentralisation.}
+
+\paragraph{Transactions and accounts}
+There are two types of accounts defined in Ethereum:
+\begin{itemize}[noitemsep]
+    \item \textit{\acrfull{eoa}}. \acrshort{eoa}s are accounts controlled by a public-private key-pair that have a non-zero Ether balance. \acrshort{eoa}s can send transactions. \cite{EthereumCommunityEthereumDocumentation}
+    \item \textit{Contract account}. Contract account is an account that has code associated with it. It can run its code and maintain its internal state. It can communicate with other contracts by sending objects called \textit{messages}. Execution of contract's code is triggered by an incoming transaction or a message \cite{EthereumCommunityEthereumDocumentation}.
+\end{itemize}
+
+% The code associated with a smart contract
+
+% in Ethereum, transactions are used to alter the state of the state machine \cite[p. 2]{Tikhomirov2018Ethereum:Perspectives}. Contracts
