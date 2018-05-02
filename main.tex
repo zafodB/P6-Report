@@ -10,14 +10,18 @@
 \usepackage{graphicx}
 \usepackage{upgreek}
 \usepackage{setspace}
-\usepackage{longtable}
+% \usepackage{longtable}
+\usepackage{framed}
 \usepackage{eurosym}
+\usepackage{listings}
 \usepackage{rotating}
 \usepackage[table]{xcolor}
 \usepackage[acronym,toc]{glossaries}
 
-\renewcommand{\arraystretch}{1.3}
-\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+% \renewcommand{\arraystretch}{1.3}
+% \renewcommand{\glsnamefont}[1]{\textbf{#1}}
+
+\def\code#1{\texttt{#1}}
 
 \graphicspath{ {00Images/} }
 \DeclareGraphicsExtensions{.png,.pdf}
@@ -29,6 +33,7 @@
 % Acronyms %%%%%%%%
 \makeglossaries
 
+\newacronym{api}{API}{Application programming interface}
 \newacronym{ecdsa}{ECDSA}{Elliptic Curve Digital Signature Algorithm}
 \newacronym{ico}{ICO}{Initial Coin Offering}
 \newacronym{dcex}{DCE}{Digital Currency Exchange}

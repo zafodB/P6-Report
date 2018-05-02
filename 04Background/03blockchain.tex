@@ -1,10 +1,10 @@
 \subsection{Blockchain}
 % 
-Since the inception of a digital currency Bitcoin (described in the following section) in 2009, blockchain has been part of the discussions about this novel approach to currency. Over the time, the perception shifted from seeing blockchain just as a part of cryptocurrency into seeing it as an separate, innovative, even disruptive technology. Some media mark \textit{blockchain} to be the word of the year 2017\footnotemark, while others comparable it to inception of the Web in 1990s \cite[p. 14]{Swan2015BlockchainEconomy}.
+Since the inception of a digital currency Bitcoin (described in the following section) in 2009, blockchain has been part of the discussions about this novel approach to currency. Over the time, the perception shifted from seeing blockchain just as a part of cryptocurrency into seeing it as an separate, innovative, even disruptive technology. Some media mark \textit{blockchain} to be the word of the year 2017\footnotemark, while others comparable it to inception of the Web in 1990s~\cite[p. 14]{Swan2015BlockchainEconomy}.
 % 
 \footnotetext{\url{https://www.theguardian.com/technology/2018/jan/30/blockchain-buzzword-hype-open-source-ledger-bitcoin}, accessed 28-03-2018}
 
-From the perspective of cryptocurrency, blockchain is a public ledger, that contains all the transactions of the cryptocurrency to date \cite{Swan2015BlockchainEconomy}. It is distributed among all the computers participating in the consensus process. Since it contains all the past transactions (since the inception of the currency), data is never deleted from the blockchain. All changes happen only as amendments to the latest version of the blockchain.
+From the perspective of cryptocurrency, blockchain is a public ledger, that contains all the transactions of the cryptocurrency to date~\cite{Swan2015BlockchainEconomy}. It is distributed among all the computers participating in the consensus process. Since it contains all the past transactions (since the inception of the currency), data is never deleted from the blockchain. All changes happen only as amendments to the latest version of the blockchain.
 
 A \textit{change} could be virtually any data. For example, it could be details of latest transactions (as is the case with Bitcoin) or newly deposited agreements (as in Quorum - enterprise level ledger \footnotemark ). This \textit{change} is called a \textit{block}. Blocks are the fundamental parts, that make up the blockchain. When a new blockchain is created, a first set of changes becomes the first block.
 % 
@@ -15,7 +15,7 @@ A \textit{change} could be virtually any data. For example, it could be details 
 \end{flushleft}
 }
 % 
-When more changes are made (for example, more transactions are processed), a new block is created. The creation of a new block involves computing a hash value of the previous block. This hash value is then included in the new block, together with the data comprising the change. By including the hash value of the old block in the new block, these two blocks are now linked. All the blocks in the blockchain are linked together in such fashion. Figure \ref{fig:blockch-basics} illustrates this principle. 
+When more changes are made (for example, more transactions are processed), a new block is created. The creation of a new block involves computing a hash value of the previous block. This hash value is then included in the new block, together with the data comprising the change. By including the hash value of the old block in the new block, these two blocks are now linked. All the blocks in the blockchain are linked together in such fashion. Figure~\ref{fig:blockch-basics} illustrates this principle. 
 % 
 \begin{figure}[h]
     \centering
@@ -24,15 +24,15 @@ When more changes are made (for example, more transactions are processed), a new
     \label{fig:blockch-basics}
 \end{figure}
 
-It is not possible to alter the past blocks in the blockchain. In order to accomplish this, we would need to find such a combination of data, that would produce the same hash. This violates the pre-image resistance property of the hash function. Alternative technique could be to change the data in block \textit{n}, then calculate new hash and include it in block \textit{n+1} and so on, recalculating every subsequent block \cite[3]{NakamotoBitcoin:System}.
+It is not possible to alter the past blocks in the blockchain. In order to accomplish this, we would need to find such a combination of data, that would produce the same hash. This violates the pre-image resistance property of the hash function. Alternative technique could be to change the data in block \textit{n}, then calculate new hash and include it in block \textit{n+1} and so on, recalculating every subsequent block~\cite[3]{NakamotoBitcoin:System}.
 
 The decentralisation of the blockchain prevents this. Every participating node maintains and updates its own copy of the blockchain. When there is a dispute about the correct version of the blockchain, the version that is present on most nodes is chosen as the correct one and the other versions are discarded. Therefore, an attacker would need to control the majority of the nodes in the network in order to include counterfeit data in the blockchain.
 
-Based on the use of the blockchain, we can distinguish between three `levels' \cite{Swan2015BlockchainEconomy}:
+Based on the use of the blockchain, we can distinguish between three `levels'~\cite{Swan2015BlockchainEconomy}:
 \begin{itemize}[noitemsep, nolistsep]
     \item \textit{Level 1} is blockchain used with currency only. The data here are transactions of that currency. Level 1 of blockchain would be for example Bitcoin.
     \item \textit{Level 2} includes smart contracts and more advanced transactions and agreements than Level 1. However, Level 2 of blockchain is still tied to financial applications in some way. Example of Level 2 blockchain is Ethereum platform.
-    \item \textit{Level 3} of blockchain includes usage outside of financial applications, in sectors such as government or health-care \cite{Swan2015BlockchainEconomy}.
+    \item \textit{Level 3} of blockchain includes usage outside of financial applications, in sectors such as government or health-care~\cite{Swan2015BlockchainEconomy}.
 \end{itemize}
 
 % Motivate problems with cryptocurrency? Double spending problem and byzantines general problem? 
