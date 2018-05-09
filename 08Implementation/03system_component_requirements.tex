@@ -1,0 +1,53 @@
+\subsection{Requirements of system components}
+
+//INTRO?
+
+\subsubsection{Application front end}
+The front end part of the proposed system has the task of receiving user's input and presenting the progress of a deployed transaction. It communicates directly with the node in order to deploy smart contracts and receive account balance and transaction hashes. Application receives data from the user (such as transaction value or destination address), verifies their validity and prepares the data in a format that can be consumed by the node. Front end also contacts the node and presents eventual replies to the user in an user-comprehensible format. If a reply is not received, the application needs to notify the user too.
+
+\begin{figure}[ht]
+    \begin{framed}
+    \begin{tabular}{l l}
+        \multicolumn{2}{c}{\textbf{Functional requirements}}\\
+        \textbf{Requirement AF-1}&Verify user input.\\
+        \textbf{Requirement AF-2}&Convert user input into node-compatible format.\\
+        \textbf{Requirement AF-3a}&Deploy contract to the node.\\
+        \textbf{Requirement AF-3b}&Query node for address balance.\\
+        \textbf{Requirement AF-3c}&Query node for address nonce.\\
+        \textbf{Requirement AF-4}&Display response from the node.\\
+        
+        \multicolumn{2}{c}{\textbf{Non-functional requirements}}
+    \end{tabular}
+    \end{framed}
+   
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsubsection{Ethereum Node}
+Ethereum node plays vital role in the application, as it deploys smart contracts, created by the user to the Ethereum network. If a node fails to do that, users cannot use the application for its purpose. We can say that the role of the node is \textit{business critical}.
+
+The node needs to send transactions to the Ethereum network reliably and without delay. When queried, it must provide accurate and most up-to-date response. We can refer to these goals as trustworthiness and reliability. Since it is impossible to guarantee trustworthiness and reliability of any single node controlled by a third party, it would be in user’s best interest to operate their own node. However, operating a full node requires resources which may not be available on a mobile device.
+
+If conditions do not allow for operation of a full node, second best alternative would be to query multiple nodes with the same request and accept the most common answer as the correct one. Since it is safe to suppose that majority of the nodes in the network are honest nodes, this would prevent single malicious node from affecting or halting the transaction process and would also resolve problems caused by downtime of any particular node. While this architecture certainly can be achieved, it is complex to fully implement such a scheme. The requirements 
+
+\begin{figure}[ht]
+    \begin{framed}
+    \begin{tabular}{l l}
+        \textbf{Requirement EN-1}&Send transactions to the network.\\
+        
+    \end{tabular}
+    \end{framed}
+   
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+The consequences of nodes not fulfilling these requirements could be the impossibility to retrieve wallet balance and the impossibility to deploy contracts to the network, which would result in users not being able to use the application. Since the transaction for contract deployment is singed on user’s device, the node cannot alter transactions it receives. If user deployed a contract, but the node refused to provide transaction hash of this transaction, user’s trading partner would never transfer the second currency. The user would therefore waste funds on paying for the gas for the contract deployment, but would not lose funds as these would be transferred back after the contract timeout period has elapsed. //EXPLAIN ABOUT THIS/REFER TO EXPLANATION
+
+\subsubsection{Smart contract}
+The smart contract should implement the logic described in //DESCRIBED WHERE. It also must emit an event after construction as it is necessary for the user’s trading partner to verify that the contract was deployed as agreed. For its correct execution, it must also cater for any costs required to cover the services of an oracle. Application should reflect such costs in user interface, if this is the case.
+
+Optionally, the contract can also emit an event when it receives a response from the oracle. If a transaction was not completed, such event could help users understand the reason.
+
+Contracts should also be as short as possible to keep the costs of deployment and operation of the contract to minimum, as the user needs to pay for gas for every bytecode instruction. High prices of operating a contract could deter users from using the application.

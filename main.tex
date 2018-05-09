@@ -4,11 +4,11 @@
 \usepackage{titlesec}
 \usepackage[inline]{enumitem}
 \usepackage[left=2.54cm,top=3cm,right=2.54cm,bottom=3cm]{geometry}
-\usepackage[]{csquotes}
 \usepackage[sorting=none, style=numeric-comp]{biblatex}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{upgreek}
+\usepackage{tabularx}
 \usepackage{setspace}
 % \usepackage{longtable}
 \usepackage{framed}
@@ -43,6 +43,15 @@
 \newacronym{eoa}{EOA}{Externally Owned Account}
 \newacronym{ide}{IDE}{Integrated Development Environment}
 \newacronym{modelvp}{MVP}{Model-view-presenter}
+\newacronym{nfr}{NFR}{Non-functional requirement}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
+% \newacronym{}{}{}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
@@ -66,15 +75,18 @@
 
 \include{01Introduction/introduction}
 \pagebreak
-% \include{02ProblemFormulation/problem_formulation}
-% \pagebreak
-% \include{03Methodology/00methodology}
-% \pagebreak
+\include{02ProblemFormulation/problem_formulation}
+\pagebreak
+\include{03Methodology/00methodology}
+\pagebreak
 \include{04Background/00background}
 \pagebreak
-% \include{05StateOfTheArt/00state_of_art}
-% \pagebreak
+\include{05StateOfTheArt/00state_of_art}
+\pagebreak
 \include{07SystemDesign/00system_design}
+\pagebreak
+\include{08Implementation/00implementation}
+
 
 
 \printbibliography[heading=bibintoc]

@@ -1,0 +1,74 @@
+\subsection{Implementation of system components}
+
+//DUNNO? Section intro I suppose
+
+\subsubsection{Application front end} 
+
+To implement this functionality //functionality mentioned in XXX, the Android platform was chosen. Currently, it is the most used operating system in the world\footnotemark which ensures compatibility with significant number of devices. It is capable of carrying out the tasks outlined above and it does not require a centralised server to operate (as opposed to a website/web application). Development tools and documentation available free of charge and author's previous knowledge of Android programming were the further supporting arguments for Android. Android \acrshort{api} version 26 (Android Oreo) was chosen, as it is the newest supported version at the time of writing, although this has little practical implications. The prototype uses some user-interface features that were first introduced in \acrshort{api} version 22, so the minimal required Android version could be rolled back to this version without any changes.
+% 
+\footnotetext{\url{http://gs.statcounter.com/os-market-share}, as of 06-05-2018. See //REFERENCE TO APPENDIX for details}
+
+In conjunction with Android, standard Java programming language was used. This is as opposed to Kotlin, a statically typed programming language, which was developed by JetBrains\footnotemark and pronounced the official Android programming language by Google on 17th May 2017 \cite{Vasic2017MasteringKotlin}. 
+% 
+\footnotetext{JetBrains is a company that created IntelliJ and other popular \acrshort{ide}s. \url{https://www.jetbrains.com/}}
+% 
+Many industry professionals suggest migrating to Kotlin as it offers several advantages \cite{Vasic2017MasteringKotlin} \footnotemark, but it has no direct implication on the prototype, as it compiles to the same byte-code as Java.
+% 
+\footnotetext{\url{https://medium.com/@magnus.chatt/why-you-should-totally-switch-to-kotlin-c7bbde9e10d5}, accessed 06-05-2018}
+
+We will describe the structure of the prototype using the terminology of the \acrfull{modelvp} architecture pattern, which describe the architecture of an application in three layers or interfaces:
+\begin{enumerate*}[label=(\roman*)]
+    \item \textit{Model}
+    \item \textit{View} and
+    \item \textit{Presenter}
+\end{enumerate*}.
+The prototype does not fully succeed in following this patter, but it does share the major features with it. In the prototype, the split between model and presenter is not ideal and these two layers partially overlap. The approximation is as follows:
+\begin{itemize}[noitemsep]
+    \item Fragments have the role of the \textit{view} part
+    \item \texttt{MainActivity} and wrapper classes have the role of the \textit{presenter} part
+    \item \texttt{TradeDeal} and \texttt{BtcOffer} have the role of the \textit{model}.
+\end{itemize}
+
+\paragraph{View} The view part of the \acrshort{modelvp} is represented by eight fragment classes. Each fragment represents one screen of the application. XML files are used to describe the user interface elements of each fragment. Fragments read user inputs from these elements and update them accordingly with information recieved from \textit{presenter} interface. Example of such fragment is \texttt{DeployContractFragment}, which displays wallet balance in one \texttt{TextView} and reads user's input from another.
+
+\paragraph{Presenter} 
+\begin{sloppypar}
+To navigate between fragments and update the view with new data, \texttt{MainActivity} is used. It implements interface \texttt{OnFragmentInteractionListener} that listens for user interaction in the fragments and responds accordingly. For example if the user selects to create a new offer by clicking on appropriate button, fragment calls the \texttt{onFragmentInteraction} method of \texttt{OnFragmentInteractionListener}, which is implemented in the activity class. \texttt{MainActivity} then initiates fragment transaction and replaces the old fragment with \texttt{CreateOfferFragment}.
+
+The \textit{presenter} part of \acrshort{modelvp} is further complemented by three wrapper classes (\texttt{EthereumWrapper}, \texttt{BitcoinWrapper} and \texttt{FirebaseWrapper}). These classes contain methods to convert data to and from user-comprehensible format (e.g. method \texttt{satoshiToBtcString} from \texttt{BitcoinWrapper} class that converts the amount in satoshi to more user-friendly format -- decimal Bitcoins) and to communicate with the network (e.g. method \texttt{fetchExistingOffers} in \texttt{FirebaseWrapper} to get data from the database or method \texttt{sendContract} in \texttt{EthereumWrapper} to deploy contract to the network).
+\end{sloppypar}
+
+\paragraph{Model}
+The \textit{model} interface in the prototype is represented by classes \texttt{BtcOffer} and \texttt{TradaDeal}. The first is used to contain all details of an offer to sell Bitcoins, both when a new offer is created and when existing offers are loaded from the database. When a user decides to proceed with an offer, \texttt{BtcOffer} is transformed into a \texttt{TradeDeal}. Trade deal holds further details of the offer, such as the deploying address and is used during the transaction validation process and during contract deployment.
+
+The Java representation of the smart contract, \texttt{SmartExchange2} is also part of the model. It does not operate any logic in the Android application, but it holds the binary representation of the compiled Solidity code. The methods of this Java representation would also be used to communicate with an already deployed smart contract, although this functionality is currently not implemented in the prototype as it is not needed. \texttt{SmartExchange2} also contains the constructor used to pass initial value to the contract upon deployment. It is important to note, that \texttt{SmartExchange2} is an auto-generated code by the Web3j library, which takes ABI and BIN files of a compiled contract as the input and returns a single Java class as the output.
+
+\subsubsection{Node}
+As mentioned in //REFERENCE TO SECTION OF SOTA, Etherumj could be used to connect to the Ethereum network. However, running a full node on the Android platform may not be a viable solution, due to limitations of mobile devices. These limitations include storage, network bandwidth and power consumption. Fully connected node maintains a local copy of the blockchain (storage) and regularly communicates with the network peers to get the most recent block (network and battery consumption). Alternative solution to lower the load on the mobile device would be to run a light client (//GITHUB REFERENCE), which is targeted specifically for mobile devices and that does not maintain a local copy of the whole blockchain.
+
+Since the Light Client Protocol is still under development and to speed up the development, we decided to use a remotely hosted node for this prototype. Instead of deploying own remote Ethereum node, a node-hosting service Infura was chosen. Upon creating an account on Infura’s website, developer is presented with a series of API endpoints – one endpoint for all major Ethereum networks (Mainnet, Kovan, Rynkeby…). Endpoints accept connections from any client and no authentication is needed. This is not an issue, since by design, the prototype signs the transaction on device, before it is deployed to the network, so the node does not have access to any sensitive data.
+
+While running a single node is sufficient to demonstrate the idea of the prototype, more work should be put into implementing the solution with multiple nodes. In a market-ready version of the application, the centralisation implied by using a single node would pose as a major, business critical drawback. This should be one of the first issues to address in any further development of the application.
+% 
+\subsubsection{Smart Contract}
+The contract was written in the Solidity language, as it is currently the recommended (//?) language for smart contracts. The latest available version //SOLIDITY VERSION (probably newest) was used. The smart contract was written using Remix, an in-browser IDE, recommended for use with Solidity, which enables sandbox contract testing. Oraclize (//EXPLAIN WTH IS ORACLIZE) version of Remix was also used to test the functionality of an oracle.
+
+Smart contract in Solidty was then compiled into binary and ABI (//EXPLAIN WHHAT THIS) files, using the solc compiler. The BIN and ABI files where then used by Web3j command line tools to generate Java representation of the Smart contract (//LINK TO FILE IN ATTACHMENT/APPENDIX). On top of the compiled smart contract in binary form, this Java file also includes wrapper methods to invoke the custom constructor and the methods of the contract.
+
+% 
+\paragraph{Oracle}
+Using Oraclize for this service... why? Why not?
+% 
+\paragraph{Blockchain explorer}
+Using blockchain.info... why? Why not?
+
+Database/Firebase
+
+\paragraph{Drawbacks}
+Using 1 node in the prototype
+
+Using oraclize in the prototype
+
+Using blockchain.info in the prortytype
+
+Using unsecured database in the prototype.
