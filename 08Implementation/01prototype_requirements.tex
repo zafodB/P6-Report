@@ -13,17 +13,19 @@ The requirements for the prototype were selected in such way, so that the overal
 
 \begin{table}[ht]
     \centering
-    \begin{tabularx}{\textwidth}{|l|X|}
+    % \begin{framed}
+    \begin{tabularx}{\textwidth}{|l X|}
     \hline
-    \textbf{Requirement ID}& \textbf{Requirement text}\\
-    \hline
+    \textbf{Requirement ID}& \textbf{Description}\\
+    &\\
     PT-FR-1 & The primary user and the secondary user should be able to agree on the terms of the transaction.\\
     PT-FR-2 & The primary user must be able to deploy a smart contract to the Ethereum network.\\
     PT-FR-3 & The secondary user should be able to verify contract deployment.\\
     PT-FR-4 & The secondary user should be able to transfer Bitcoin.\\
-    PT-FR-5 & In case secondary user does not transfer Bitcoin, primary user must receive their Ether back.\\
+    PT-FR-5 & If the secondary user does not transfer Bitcoin, the primary user must receive their Ether back.\\
     \hline
     \end{tabularx}
+    % \end{framed}
     \caption{Initial set of functional requirements on the prototype.}
     \label{tab:pt-func-reqs}
     \end{table}
@@ -34,15 +36,17 @@ The overall goal is to develop a secure solution, that does not allow a maliciou
 
 \begin{table}[ht]
     \centering
-    \begin{tabularx}{\textwidth}{|l|X|}
+    \begin{tabularx}{\textwidth}{|l X|}
     \hline
-    \textbf{Requirement ID}&\textbf{Requirement text}\\
-    PT-NFR-1 & The system must implement architecture proposed in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech}.\\
-    PT-NFR-2 & There should not be single point of failure in the system.\\
-    PT-NFR-3 & No other party should have control over the funds of primary user and secondary user.\\
-    PT-NFR-4 & Primary user and secondary user must be ably to verify the status of their transaction.\\
+    \textbf{Requirement ID}&\textbf{Description}\\
+    &\\
+    PT-NFR-1&The system must implement architecture proposed in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech}.\\
+    PT-NFR-2&There should not be single point of failure in the system.\\
+    PT-NFR-3&No other party should have control over the funds of primary user and secondary user.\\
+    PT-NFR-4&Primary user and secondary user must be ably to verify the status of their transaction.\\
     \hline
     \end{tabularx}
+    
     \caption{Non-functional requirements drawn from the initial idea.}
     \label{tab:pt-nonfunc-reqs}
 \end{table}
