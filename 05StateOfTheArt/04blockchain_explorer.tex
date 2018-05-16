@@ -1,0 +1,12 @@
+\subsection{Blockchain explorer}
+Generally, it is not possible to learn about status of a blockchain (Ethereum, Bitcoin or other) unless we launch a node that directly participates in the blockchain by receiving, verifying and forwarding blocks. However, it is not always feasible to run such a node. If we do not need to deploy any transactions to the network, but only need to receive information from it, we can use a \textit{blockchain explorer}.
+
+A blockchain explorer is a service that participates in the blockchain and exposes its information publicly, so that even parties that are not running a network node can see the information contained in the blockchain\footnotemark. Such information may include transactions, unspent outputs, deployed contracts and other data, usually only visible to participating nodes. 
+% 
+\footnotetext{At the time of writing, there is no consensus on the use of terms \textit{blockchain explorer} and \textit{block explorer}. Websites offering such services use these terms to market themselves. On the other hand other papers, such as \cite{Kuzuno2017BlockchainBitcoin} use these terms in a different context.}
+% 
+General cryptocurrency users and services built on top of the blockchain are the most common users of the blockchain explorers\footnotemark/
+%
+\footnotetext{\url{https://blockchain.info/api}, \url{https://www.blockchain.com/about/index.html}, accessed 12-05-2018}
+
+There are several providers that offer blockchain explorer services. Web interfaces, allowing users to search for and browse transactions and addresses, as well as \acrshort{api}s offering limited number of methods defined by JSON-RPC, are both common practices. Some examples of providers offering these services are \textit{Blockchain}\footnote{\url{https://blockchain.info/}, accessed 12-05-2018}, \textit{Block Explorer}\footnote{\url{https://blockexplorer.com/}, accessed 12-05-2018} and \textit{Block Cypher}\footnote{\url{https://live.blockcypher.com/btc/}, accessed 12-05-2018}. All these examples offer web interface together with an \acrshort{api}.

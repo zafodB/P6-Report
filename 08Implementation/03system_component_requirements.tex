@@ -56,7 +56,7 @@ A smart contract is deployed to the Ethereum network when the primary and second
 % 
 \footnotetext{We do not see this as an issue, since the increased costs of the primary user can be estimated beforehand and accounted for when agreeing on the transaction amount. Further analysis of this problem follows in Discussion chapter //Remember to add reference.}
 
-The smart contract must implement the logic of the half black-box (described in Figure~\ref{fig:simple-logic} on page \pageref{fig:simple-logic}. Furthermore, the contract must emit an event after it has been created as it is necessary for the secondary user to verify that the contract was deployed as agreed. For its correct execution, it must also cater for any costs required to cover the services of an oracle.
+The smart contract must implement the logic of the half black-box (described in Figure~\ref{fig:simple-logic} on page \pageref{fig:simple-logic}). Furthermore, the contract must emit an event after it has been created as it is necessary for the secondary user to verify that the contract was deployed as agreed. For its correct execution, it must also cater for any costs required to cover the services of an oracle.
 
 Optionally, the contract can also emit an event when it receives a response from the oracle. If a transaction was not completed, such event could help users understand the reason. Contracts should also be as short as possible to keep the costs of deployment and operation of the contract to minimum, as the user needs to pay for gas for every bytecode instruction. High prices of operating a contract could deter users from using the application. The requirements on the smart contract are listed in Table~\ref{tab:reqs-smart-contract}.
 
@@ -79,10 +79,15 @@ Optionally, the contract can also emit an event when it receives a response from
 \end{table}
 
 \subsubsection{Oracle}
+The goal of an oracle is to allow smart contracts access real-world data from inside the Ethereum blockchain. The oracle receives a query from the smart contract, containing a Bitcoin address to look up and at least one web \acrshort{api} endpoint (a blockchain explorer provider) to use for the look-up. It queries this \acrshort{api} and returns the answer to the smart contract.
 
-The goal of an oracle is to allow smart contracts access real-world data from inside the Ethereum blockchain. The oracle receives a query from the smart contract, containing a Bitcoin address to look up and at least one web \acrshort{api} endpoint (a blockchain explorer provider) to use for the look-up. It queries this \acrshort{api} and returns the amount of Satoshi at the queried address.
+By providing an incorrect data to the smart contract, the oracle could influence on whether the Ether funds will be released or not. Therefore, it is necessary that the oracle provides accurate responses to queries and does not tamper with the results it receives from the endpoint. However, we can not ensure that these requirements are fulfilled, if an oracle implemented by another provider is used. If we implemented the oracle ourselves, we would have control over the requirements, however the system would still be centralised. According to requirement PT-NFR-2 (Figure \ref{tab:pt-nonfunc-reqs} on page \pageref{tab:pt-nonfunc-reqs}), there should not be a single point of failure in the system. Regardless of who implemented the oracle, it is still a central point which, in case is not operable or is behaving maliciously, could prevent a transaction from happening correctly.
 
-By having a direct influence on whether the Ether will be released by the smart contract, the oracle could prevent any transaction from happening, should it provide incorrect information the smart contract. Naturally, the oracle should provide accurate responses to queries, should not tamper with the results it receives from the blockchain explorer and should treat all queries equally. However, we can not ensure that these requirements are fulfilled. According to requirement PT-NFR-2 (Figure \ref{tab:pt-nonfunc-reqs} on page \pageref{tab:pt-nonfunc-reqs}), there should not be a single point of failure in the system. Multiple oracles should be queried and the most common response should be accepted by the contract as the correct one, to secure the system against an dishonest oracle. However, this may significantly increase the costs of the transaction. Alternative solution would be to implement a response integrity proof, which would verify that the response has not been changed by the oracle. Functional and non-functional requirements on the oracle are listed in Table~\ref{tab:reqs-oracle}.
+Multiple oracles should be queried and the most common response should be accepted by the contract as the correct one. This would secure the system against an dishonest or unresponsive oracle. However, this may significantly increase the costs of the transaction, depending on the fees for services of each particular oracle. Alternative solution would be to implement a \textit{response integrity proof}, which would verify that the response has not been changed by the oracle. Similar concepts are currently being developed\footnotemark.
+% 
+\footnotetext{\url{http://docs.oraclize.it/\#security-deepdive-authenticity-proofs-types}, accessed 16-05-2018}
+
+Functional and non-functional requirements on the oracle are listed in Table~\ref{tab:reqs-oracle}.
 
 \begin{table}[ht]
     \centering
@@ -95,17 +100,56 @@ By having a direct influence on whether the Ether will be released by the smart 
         \multicolumn{2}{|l|}{\textbf{Non-functional requirements}}\\
         OR-NFR-1&The oracle should provide accurate and correct response to the query.\\
         OR-NFR-2&The oracle should respond to queries without delay (unless otherwise specified).\\
-        OR-NFR-3&The oracle should process all queries with equal priority.\\
     \hline
     \end{tabularx}
-    \caption{Requirements on the oracle. Note, that it may not be possible to enforce the non-functional requirements and another solution may need to be implemented to avoid centralisation of the system.}
+    \caption{Requirements on the oracle. Note, that it may not be possible to enforce the non-functional requirements and another solution may need to be implemented to avoid centralisation of the system, such as querying multiple oracles.}
     \label{tab:reqs-oracle}
 \end{table}
 
 \subsubsection{Blockchain explorer}
+As explained above, a smart contract needs to receive details about a Bitcoin transaction to decide whether it can release the Ether to its destination. However, the smart contract cannot directly communicate with any data sources that are outside the Ethereum blockchain, neither can Ethereum nodes learn the status of the Bitcoin blockchain\footnotemark.
+% 
+\footnotetext{Currently there are no Ethereum clients offer such functionality. See section \ref{sec:eth-clients} on page \pageref{sec:eth-clients} for more details.}
+% 
+Oracles can learn the about data outside the blockchain, but they can not query the Bitcoin blockchain directly either\footnotemark. A party that can learn the status of the Bitcoin blockchain, while also providing an accessible \acrshort{api} is needed. Blockchain explorers provide this as a part of their services. As argued the Architecture section, the smart contract only needs to query an address for its balance. Many Blockchain explorers offer this and many more methods in their APIs.
+% 
+\footnotetext{Currently there are no available oracles that offer such functionality.}
+% 
+\begin{table}[ht]
+    \centering
+    \begin{tabularx}{\textwidth}{|l X|}
+    \hline
+        \multicolumn{2}{|c|}{\textbf{Blockchain explorer}}\\
+        \multicolumn{2}{|l|}{\textbf{Functional requirements}}\\
+        BE-FR-1&Blockchain explorer must support an API query for address balance.\\
+        &\\
+        \multicolumn{2}{|l|}{\textbf{Non-functional requirements}}\\
+        BE-NFR-1&The blockchain explorer should provide accurate and correct response to the query.\\
+        BE-NFR-2&The blockchain explorer should respond to queries without delay.\\
+    \hline
+    \end{tabularx}
+    \caption{Requirements on the blockchain explorer. Similarly as with the oracle, it may not be possible to enforce the non-functional requirements. Querying multiple providers and taking the most common answer as correct would be a solution to this problem.}
+    \label{tab:reqs-block-explorer}
+\end{table}
 
-Why do we need this? what do we need *from* this
+\subsubsection{Communication back end}
+According to the prototype requirement PT-FR-1 (Table \ref{tab:pt-func-reqs} on page \pageref{tab:pt-func-reqs}), the prototype should implement a platform, where users can agree on the terms of the transaction. This part of the system can be centralised, since the users may still be able to agree on the transaction terms on another platform. The back-end should include a database, which serves as a repository, where users can display their trading offers. When a user enters the application, the application fetches existing offers from the database and users can select an offer and carry out a transaction with the person that made the offer. If a user does not see an offer that suits his/her needs, they can create a new offer which is then added to the list. Both primary and secondary users should be able to create offers in their respective currencies. The back end could also provide functionality that assists users with proceeding in the transaction. For example, when a user selects an offer, the back end notifies the person that created this offer and displays a hint on the next action this person needs to take (e.g. \textit{deploy smart contract} or \textit{send Bitcoins now}).
 
-\subsubsection{Database}
+\begin{table}[ht]
+    \centering
+    \begin{tabularx}{\textwidth}{|l X|}
+    \hline
+        \multicolumn{2}{|c|}{\textbf{Communication back end}}\\
+        \multicolumn{2}{|l|}{\textbf{Functional requirements}}\\
+        BE-FR-1&Blockchain explorer must support an API query for address balance.\\
+        &\\
+        \multicolumn{2}{|l|}{\textbf{Non-functional requirements}}\\
+        BE-NFR-1&The blockchain explorer should provide accurate and correct response to the query.\\
+        BE-NFR-2&The blockchain explorer should respond to queries without delay.\\
+    \hline
+    \end{tabularx}
+    \caption{Requirements on the blockchain explorer. Similarly as with the oracle, it may not be possible to enforce the non-functional requirements. Querying multiple providers and taking the most common answer as correct would be a solution to this problem.}
+    \label{tab:reqs-block-explorer}
+\end{table}
 
 What do we need the database for? Users' communication channel. Not THAT important. Nice to have in prototype

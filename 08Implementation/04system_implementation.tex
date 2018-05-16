@@ -46,7 +46,7 @@ The Java representation of the smart contract, \texttt{SmartExchange2} is also p
 \subsubsection{Node}
 As mentioned in //REFERENCE TO SECTION OF SOTA, Etherumj could be used to connect to the Ethereum network. However, running a full node on the Android platform may not be a viable solution, due to limitations of mobile devices. These limitations include storage, network bandwidth and power consumption. Fully connected node maintains a local copy of the blockchain (storage) and regularly communicates with the network peers to get the most recent block (network and battery consumption). Alternative solution to lower the load on the mobile device would be to run a light client (//GITHUB REFERENCE), which is targeted specifically for mobile devices and that does not maintain a local copy of the whole blockchain.
 
-Since the Light Client Protocol is still under development and to speed up the development, we decided to use a remotely hosted node for this prototype. Instead of deploying own remote Ethereum node, a node-hosting service Infura was chosen. Upon creating an account on Infura’s website, developer is presented with a series of API endpoints – one endpoint for all major Ethereum networks (Mainnet, Kovan, Rynkeby…). Endpoints accept connections from any client and no authentication is needed. This is not an issue, since by design, the prototype signs the transaction on device, before it is deployed to the network, so the node does not have access to any sensitive data.
+To speed up the development, we decided to use a remotely hosted node for this prototype. Instead of deploying own remote Ethereum node, a node-hosting service Infura was chosen. Upon creating an account on Infura’s website, developer is presented with a series of API endpoints – one endpoint for all major Ethereum networks (Mainnet, Kovan, Rynkeby…). Endpoints accept connections from any client and no authentication is needed. This is not an issue, since by design, the prototype signs the transaction on device, before it is deployed to the network, so the node does not have access to any sensitive data.
 
 While running a single node is sufficient to demonstrate the idea of the prototype, more work should be put into implementing the solution with multiple nodes. In a market-ready version of the application, the centralisation implied by using a single node would pose as a major, business critical drawback. This should be one of the first issues to address in any further development of the application.
 % 
@@ -63,7 +63,9 @@ Using Oraclize for this service... why? Why not?
 \subsubsection{Blockchain explorer}
 Using blockchain.info... why? Why not?
 
-Database/Firebase
+\subsubsection{Database //Firebase}
+The back end for user communication is mostly included in the prototype to demonstrate the flow of the transaction. While in the prototype implementation, the communication back-end is necessary to coordinate actions of primary and secondary user, in a market-ready product it should only play supportive role -- so that even when the back-end is not operational, the application still can be used.
+
 
 \paragraph{Drawbacks}
 Using 1 node in the prototype

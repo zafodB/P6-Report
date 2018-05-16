@@ -123,4 +123,14 @@ The solution to this problem is provided by \textit{oracles}, which are speciali
     \label{fig:oracles-principle}
 \end{figure}
 
+\subsubsection{Learning status of a transaction}
+According to the logic of the half black-box, the smart contract must check that the currency was transferred from Bob to Alice. The most direct way to check whether a transaction happened and whether it was made with the correct details (amount and destination address) is to find the transaction by the transaction hash. Transaction hash is a unique identifier and can be reliably used to locate a transaction and details associated with it. However, when the smart contract is created, a transaction hash of the Bitcoin transaction is not yet known.
+% 
+A possible solution would be to monitor balance on an existing address that belongs to Alice. If Alice already owns a Bitcoin wallet with balance of 1.5 Bitcoins and she agrees with Bob that she will receive 0.5 Bitcoins in the transaction. Smart contract can then monitor the address of Alice's wallet and if it reaches balance of 2.0 Bitcoins, the smart contract releases the Ether. However, if Cyril, a friend of Alice, would transfer 0.5 Bitcoins to her at the same time (e.g. to return money he borrowed earlier), not knowing that she engaged in a transaction with Bob, smart contract would notice that the balance on the account is now 2.0 Bitcoins and would release the funds to Bob, supposing it was Bob who transferred the funds as a part of the transaction. Similar problem arises if Alice is a shop. The approach with a known wallet address would therefore not work. To avoid similar problems, Alice should generate a new Bitcoin address for every transaction she engages. This way, there is no risk that the smart contract will pick up Cyril's transaction, because Cyril does not know the newly created Bitcoin address\footnotemark.
+% 
+\footnotetext{Address reuse is generally not a recommended practice. Current Bitcoin wallets usually prevent users from using the same address twice and offer an automated way of managing newly created addresses.
+
+\url{https://en.bitcoin.it/wiki/Address_reuse}, accessed 16-05-2018
+}
+
 We can conclude that a system that allows exchange of cryptocurrencies directly between two parties has an elevated degree of complexity. The lack of trust in the virtual currency trading poses as a barrier for several more simple solutions that could be used to exchange fiat currencies. After breaking down the high-level overview into more concrete and implementable architecture, we will describe the development of a prototype in the following section.
