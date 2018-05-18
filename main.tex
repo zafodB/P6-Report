@@ -5,17 +5,20 @@
 \usepackage[inline]{enumitem}
 \usepackage[left=2.54cm,top=3cm,right=2.54cm,bottom=3cm]{geometry}
 \usepackage[sorting=none, style=numeric-comp]{biblatex}
-\usepackage{hyperref}
+
 \usepackage{graphicx}
-\usepackage{upgreek}
+% \usepackage{upgreek}
 \usepackage{tabularx}
+% \usepackage{tablefootnote}
 \usepackage{setspace}
 % \usepackage{longtable}
 \usepackage{framed}
-\usepackage{eurosym}
+% \usepackage{eurosym}
 \usepackage{listings}
-\usepackage{rotating}
+\usepackage{epigraph}
+% \usepackage{rotating}
 \usepackage[table]{xcolor}
+\usepackage{hyperref}
 \usepackage[acronym,toc]{glossaries}
 
 \renewcommand{\arraystretch}{1.15}
@@ -44,10 +47,9 @@
 \newacronym{ide}{IDE}{Integrated Development Environment}
 \newacronym{modelvp}{MVP}{Model-view-presenter}
 \newacronym{nfr}{NFR}{Non-functional requirement}
-% \newacronym{}{}{}
-% \newacronym{}{}{}
-% \newacronym{}{}{}
-% \newacronym{}{}{}
+\newacronym{ipfs}{IPFS}{InterPlanetary File System}
+\newacronym{pow}{PoW}{Proof-of-Work}
+\newacronym{evm}{EVM}{Ethereum Virtual Machine}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
@@ -79,19 +81,26 @@
 % \pagebreak
 % \include{03Methodology/00methodology}
 % \pagebreak
-% \include{04Background/00background}
+\include{04Background/00background}
 % \pagebreak
-\include{05StateOfTheArt/00state_of_art}
-\pagebreak
+% \include{05StateOfTheArt/00state_of_art}
+% \pagebreak
 % \include{07SystemDesign/00system_design}
 % \pagebreak
-\include{08Implementation/00implementation}
-\pagebreak
+% \include{08Implementation/00implementation}
+% \pagebreak
 % \include{09Discussion/00discussion}
 % \pagebreak
 % \include{10Conclusion/00conclusion}
 % \pagebreak
 \printbibliography[heading=bibintoc]
+
+\epigraph{Smart contracts are neither smart, nor contracts!}{\textit{www.stateofthedapps.com/about}}
+
+% \begin{quote} 
+% \centering 
+% Smart contracts are neither smart, nor contracts!
+% \end{quote}
 % \pagebreak
 
 

@@ -2,7 +2,7 @@
 
 //INTRO?
 
-\subsubsection{Application front end}
+\subsubsection{Application front end}\label{sec:app-front-reqs}
 The front end part of the proposed system has the task of receiving user's input and presenting the progress of a deployed transaction. It communicates directly with the node in order to deploy smart contracts and receive account balance and transaction hashes. Application receives data from the user (such as transaction value or destination address), verifies their validity and prepares the data in a format that can be consumed by the node. Front end also contacts the node and presents eventual replies to the user in an user-comprehensible format. If a reply is not received, the application needs to notify the user too.
 
 \begin{figure}[ht]
@@ -133,7 +133,7 @@ Oracles can learn the about data outside the blockchain, but they can not query 
 \end{table}
 
 \subsubsection{Communication back end}
-According to the prototype requirement PT-FR-1 (Table \ref{tab:pt-func-reqs} on page \pageref{tab:pt-func-reqs}), the prototype should implement a platform, where users can agree on the terms of the transaction. This part of the system can be centralised, since the users may still be able to agree on the transaction terms on another platform. The back-end should include a database, which serves as a repository, where users can display their trading offers. When a user enters the application, the application fetches existing offers from the database and users can select an offer and carry out a transaction with the person that made the offer. If a user does not see an offer that suits his/her needs, they can create a new offer which is then added to the list. Both primary and secondary users should be able to create offers in their respective currencies. The back end could also provide functionality that assists users with proceeding in the transaction. For example, when a user selects an offer, the back end notifies the person that created this offer and displays a hint on the next action this person needs to take (e.g. \textit{deploy smart contract} or \textit{send Bitcoins now}).
+To support the process of making transactions, the system should implement a platform, where users can agree on the currencies and amounts they wish to exchange. Implementation of this platform would also satisfy the prototype requirement PT-FR-1 (Table \ref{tab:pt-func-reqs} on page \pageref{tab:pt-func-reqs}). This part of the system can be centralised, since the users may still be able to agree on the transaction terms on another platforms that are not part of our system. This back end platform should include a database, which serves as a repository, where users can display their trading offers. When a user enters the application, the application fetches existing offers from the database and users can select an offer and carry out a transaction with the person that made the offer. If a user does not see an offer that suits his/her needs, they can create a new offer which is then added to the list. Both primary and secondary users should be able to create offers in their respective currencies. The back end could also provide functionality that assists users with proceeding in the transaction. For example, when a user selects an offer, the back end notifies the person that created this offer and displays a hint on the next action this person needs to take (e.g. \textit{deploy smart contract} or \textit{send Bitcoins now}). Table \ref{tab:reqs-back-end} summarises these requirements.
 
 \begin{table}[ht]
     \centering
@@ -141,15 +141,14 @@ According to the prototype requirement PT-FR-1 (Table \ref{tab:pt-func-reqs} on 
     \hline
         \multicolumn{2}{|c|}{\textbf{Communication back end}}\\
         \multicolumn{2}{|l|}{\textbf{Functional requirements}}\\
-        BE-FR-1&Blockchain explorer must support an API query for address balance.\\
+        CB-FR-1&Communication back end should be able to store users' offers.\\
+        CB-FR-1&Communication back end should assist users during the transaction process.\\
         &\\
         \multicolumn{2}{|l|}{\textbf{Non-functional requirements}}\\
-        BE-NFR-1&The blockchain explorer should provide accurate and correct response to the query.\\
-        BE-NFR-2&The blockchain explorer should respond to queries without delay.\\
+        CB-NFR-1&The communication back end must not be able to prevent a transaction from happening.\\
+        CB-NFR-2&The communication back end must not have control over users' funds.\\
     \hline
     \end{tabularx}
-    \caption{Requirements on the blockchain explorer. Similarly as with the oracle, it may not be possible to enforce the non-functional requirements. Querying multiple providers and taking the most common answer as correct would be a solution to this problem.}
-    \label{tab:reqs-block-explorer}
+    \caption{Requirements on the back end. The overall design of the application architecture supports the non-functional requirements on  the back end.}
+    \label{tab:reqs-back-end}
 \end{table}
-
-What do we need the database for? Users' communication channel. Not THAT important. Nice to have in prototype
