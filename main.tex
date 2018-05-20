@@ -6,9 +6,12 @@
 \usepackage[left=2.54cm,top=3cm,right=2.54cm,bottom=3cm]{geometry}
 \usepackage[sorting=none, style=numeric-comp]{biblatex}
 
+\usepackage{float}
+% \usepackage[toc]{appendix}
 \usepackage{graphicx}
 % \usepackage{upgreek}
 \usepackage{tabularx}
+% \usepackage{ltablex}
 % \usepackage{tablefootnote}
 \usepackage{setspace}
 % \usepackage{longtable}
@@ -27,8 +30,8 @@
 \def\code#1{\texttt{#1}}
 
 \graphicspath{ {00Images/} }
-\DeclareGraphicsExtensions{.png,.pdf}
-% \DeclareGraphicsExtensions{.pdf,.png} % - CHANGE TO THIS
+\DeclareGraphicsExtensions{.png,.PNG,.pdf}
+% \DeclareGraphicsExtensions{.pdf,.png,.PNG} % - CHANGE TO THIS
 
 \addbibresource{mendeley.bib}
 \setlength{\parindent}{1cm}
@@ -50,7 +53,7 @@
 \newacronym{ipfs}{IPFS}{InterPlanetary File System}
 \newacronym{pow}{PoW}{Proof-of-Work}
 \newacronym{evm}{EVM}{Ethereum Virtual Machine}
-% \newacronym{}{}{}
+\newacronym{adb}{ADB}{Android Debug Bridge}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
 % \newacronym{}{}{}
@@ -81,13 +84,13 @@
 % \pagebreak
 % \include{03Methodology/00methodology}
 % \pagebreak
-\include{04Background/00background}
+% \include{04Background/00background}
 % \pagebreak
 % \include{05StateOfTheArt/00state_of_art}
 % \pagebreak
 % \include{07SystemDesign/00system_design}
 % \pagebreak
-% \include{08Implementation/00implementation}
+\include{08Implementation/00implementation}
 % \pagebreak
 % \include{09Discussion/00discussion}
 % \pagebreak
@@ -97,11 +100,23 @@
 
 \epigraph{Smart contracts are neither smart, nor contracts!}{\textit{www.stateofthedapps.com/about}}
 
-% \begin{quote} 
-% \centering 
-% Smart contracts are neither smart, nor contracts!
-% \end{quote}
 % \pagebreak
+
+\appendix
+% \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
+% \input{15Appendixes/00apendixA}
+% \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
+% \input{15Appendixes/01apendixB}
+% \newgeometry{left=2cm,right=2cm,top=1cm,bottom=1cm,footskip=.4cm}
+% \input{15Appendixes/02apendixC}
+\newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
+\input{15Appendixes/03apendixD.tex}
+\restoregeometry
+% \end{appendices}
 
 
 \end{document}
+
+%Ensure consistent use of these words:
+
+%Bitcoin, Ether, Ethereum, section, chapter, Figure, cryptocurrency, smart contract

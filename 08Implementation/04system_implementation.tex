@@ -1,21 +1,25 @@
 \subsection{Implementation of system components}
 
-In the previous section we have described requirements on the individual system components. In following paragraphs we explain, how the prototype was implemented, following the requirements listed earlier. We will elaborate on how the development was approached and what technologies were used, for every individual system component. 
-
+In the previous section we have described requirements on the individual system components. In following paragraphs we explain, how the prototype was implemented, following the requirements listed earlier. We elaborate on how the development was approached and what technologies were used, for every individual system component. 
+% 
+% 
+% 
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% 
 \subsubsection{Application front end} 
-To implement the functional requirements mentioned in section \ref{sec:app-front-reqs} (page \pageref{sec:app-front-reqs}), the Android platform was chosen. Currently, it is the most used operating system in the world\footnotemark which ensures compatibility with significant number of devices. It is capable of carrying out the tasks outlined above and it does not require a centralised server to operate (as opposed to a website/web application). Development tools and documentation available free of charge and author's previous knowledge of Android programming were the further supporting arguments for Android. Android \acrshort{api} version 26 (Android Oreo) was chosen, as it is the newest supported version at the time of writing, although this has little practical implications. The prototype uses some user-interface features that were first introduced in \acrshort{api} version 22, so the minimal required Android version could be rolled back to this version without any changes.
+To implement the functional requirements mentioned in section~\ref{sec:app-front-reqs} (page \pageref{sec:app-front-reqs}), we choose the Android platform. Currently, it is the most used operating system in the world\footnotemark which ensures compatibility with significant number of devices. It is capable of carrying out the tasks outlined above and it does not require a centralised server to operate (as opposed to a website/web application). Development tools and documentation available free of charge and author's previous knowledge of Android programming were the further supporting arguments for Android. Android \acrshort{api} version 26 (Android Oreo) was chosen, as it is the newest supported version at the time of writing, although this has little practical implications. The prototype uses some user-interface features that were first introduced in \acrshort{api} version 22, so the minimal required Android version could be rolled back to this version without any changes.
 % 
 \footnotetext{\url{http://gs.statcounter.com/os-market-share}, as of 06-05-2018. See //REFERENCE TO APPENDIX for details}
 
-In conjunction with Android, standard Java programming language was used. This is as opposed to Kotlin, a statically typed programming language, which was developed by JetBrains\footnotemark and pronounced the official Android programming language by Google on 17th May 2017 \cite{Vasic2017MasteringKotlin}. 
+In conjunction with Android, standard Java programming language was used. This is as opposed to Kotlin, a statically typed programming language, which was developed by JetBrains\footnotemark and pronounced the official Android programming language by Google on 17th May 2017~\cite{Vasic2017MasteringKotlin}. 
 % 
 \footnotetext{JetBrains is a company that created IntelliJ and other popular \acrshort{ide}s. \url{https://www.jetbrains.com/}}
 % 
-Many industry professionals suggest migrating to Kotlin as it offers several advantages \cite{Vasic2017MasteringKotlin} \footnotemark, but it has no direct implication on the prototype, as it compiles to the same byte-code as Java.
+Many industry professionals suggest migrating to Kotlin as it offers several advantages~\cite{Vasic2017MasteringKotlin} \footnotemark, but it has no direct implication on the prototype, as it compiles to the same byte-code as Java.
 % 
 \footnotetext{\url{https://medium.com/@magnus.chatt/why-you-should-totally-switch-to-kotlin-c7bbde9e10d5}, accessed 06-05-2018}
 
-We will describe the structure of the prototype using the terminology of the \acrfull{modelvp} architecture pattern, which describe the architecture of an application in three layers or interfaces:
+We describe the structure of the prototype using the terminology of the \acrfull{modelvp} architecture pattern, which describe the architecture of an application in three layers or interfaces:
 \begin{enumerate*}[label=(\roman*)]
     \item \textit{Model}
     \item \textit{View} and
@@ -28,7 +32,7 @@ The prototype does not fully succeed in following this patter, but it does share
     \item \texttt{TradeDeal} and \texttt{BtcOffer} have the role of the \textit{model}.
 \end{itemize}
 
-\paragraph{View} The view part of the \acrshort{modelvp} is represented by eight fragment classes. Each fragment represents one screen of the application. XML files are used to describe the user interface elements of each fragment. Fragments read user inputs from these elements and update them accordingly with information recieved from \textit{presenter} interface. Example of such fragment is \texttt{DeployContractFragment}, which displays wallet balance in one \texttt{TextView} and reads user's input from another.
+\paragraph{View} The view part of the \acrshort{modelvp} is represented by eight fragment classes. Each fragment represents one screen of the application. XML files are used to describe the user interface elements of each fragment. Fragments read user inputs from these elements and update them accordingly with information received from \textit{presenter} interface. Example of such fragment is \texttt{DeployContractFragment}, which displays wallet balance in one \texttt{TextView} and reads user's input from another.
 
 \paragraph{Presenter} 
 \begin{sloppypar}
@@ -42,10 +46,21 @@ The \textit{model} interface in the prototype is represented by classes \texttt{
 
 The Java representation of the smart contract, \texttt{SmartExchange2} is also part of the model. It does not operate any logic in the Android application, but it holds the binary representation of the compiled Solidity code. The methods of this Java representation would also be used to communicate with an already deployed smart contract, although this functionality is currently not implemented in the prototype as it is not needed. \texttt{SmartExchange2} also contains the constructor used to pass initial value to the contract upon deployment. It is important to note, that \texttt{SmartExchange2} is an auto-generated code by the Web3j library, which takes ABI and BIN files of a compiled contract as the input and returns a single Java class as the output.
 
-//SREENSHOT of the app
+A screenshot of the application is shown in Figure \ref{fig:app-screenshot}.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics{screenshots/screen010}
+    \caption{Screenshot of the first application screen. We can see three Bitcoin offers, which were loaded from the database.}
+    \label{fig:app-screenshot}
+\end{figure}
+% 
+% 
+% 
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% 
 \subsubsection{Node}
-As mentioned in the State of the Art \pageref{sec:eth-clients}, there are multiple Ethereum clients that can be used to deploy transactios to the network. Etherumj could be used to connect the front end application to the Ethereum network, functioning as a full network node. However, running a full node on the Android platform is not a viable solution, due to limitations of mobile devices. These limitations include storage, network bandwidth and power consumption\footnotemark.%
+As mentioned in the State of the Art \pageref{sec:eth-clients}, there are multiple Ethereum clients that can be used to deploy transactions to the network. Etherumj could be used to connect the front end application to the Ethereum network, functioning as a full network node. However, running a full node on the Android platform is not a viable solution, due to limitations of mobile devices. These limitations include storage, network bandwidth and power consumption\footnotemark.%
 \footnotetext{Proof-of-concept solutions offering a full node deployment on the Android platform exist for the Bitcoin protocol, but they maintain storage capacity and network connectivity as the limitations and are not widely used in practice. \url{https://github.com/greenaddress/abcore\#limitations}, accessed 18-05-2018}
 % 
 Fully connected node maintains a local copy of the blockchain (storage) and regularly communicates with the network peers to get the most recent block (network and battery consumption). Alternative solution to lower the load on the mobile device would be to run a light client\footnotemark, which is targeted specifically for mobile devices and that does not maintain a local copy of the whole blockchain.
@@ -56,15 +71,37 @@ To speed up the development, we decided to use a remotely hosted node for this p
 
 While running a single node is sufficient to demonstrate the idea of the prototype, more work should be put into implementing the solution with multiple nodes. In a market-ready version of the application, the centralisation implied by using a single node would pose as a major, business critical drawback. This should be one of the first issues to address in any further development of the application.
 % 
+%  __              __  ___     __   __       ___  __        __  ___ 
+% /__`  |\/|  /\  |__)  |     /  ` /  \ |\ |  |  |__)  /\  /  `  |  
+% .__/  |  | /~~\ |  \  |     \__, \__/ | \|  |  |  \ /~~\ \__,  | 
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% 
 \subsubsection{Smart Contract}
 The contract is written in the Solidity language, as it is currently the most popular language for smart contracts and offers simple JavaScript-like syntax~\cite{Tikhomirov2018Ethereum:Perspectives}. The version of Solidity does not have crucial role to the functionality of the Smart Contract, so we decided to use the latest version available (0.4.21)\footnotemark. The Smart Contract was written using Remix, an in-browser \acrshort{ide}, which enables sandbox contract testing. Oraclize (//EXPLAIN WTH IS ORACLIZE) version of Remix was also used to test the functionality of an oracle.
 % 
 \footnotetext{One implication of using version of Solidity above 0.4.0 is that a special keyword \texttt{emit} needs to be used to indicate an event in the code.}
 
-Smart contract in Solidity was then compiled into \texttt{BIN} (binary) and \texttt{ABI} (//EXPLAIN WHHAT THIS) files, using the \textit{solc} compiler. The \texttt{BIN} file contains the Solidity code compiled into Ethereum Virtual Machine bytecode and \texttt{ABI} (Application Binary Interface) file contains information about how to interact with the Smart Contract. Encoding of the \texttt{ABI} file is part of the Ethereum protocol specification\footnotemark. These \texttt{BIN} and \texttt{ABI} files where then used by Web3j command line tools to generate Java representation of the Smart contract (//LINK TO FILE IN ATTACHMENT/APPENDIX). Web3j command line tools are an extension of the Web3j library, used to automate the creation of Java file representing the Smart Contract. On top of the compiled smart contract in binary form, this Java file also includes wrapper methods to invoke the custom constructor and the methods of the contract.
+Smart contract\footnotemark in Solidity was then compiled into \texttt{BIN} (binary) and \texttt{ABI} files, using the \textit{solc} compiler.
+% 
+\footnotetext{The code of the smart contract can be seen in Appendix~\ref{sec:appendix-code} on page \pageref{sec:appendix-code} and also in the attached code}
+% 
+The \texttt{BIN} file contains the Solidity code compiled into Ethereum Virtual Machine bytecode and \texttt{ABI} (Application Binary Interface) file contains information about how to interact with the Smart Contract. Encoding of the \texttt{ABI} file is part of the Ethereum protocol specification\footnotemark. These \texttt{BIN} and \texttt{ABI} files where then used by Web3j command line tools to generate Java representation of the Smart contract\footnotemark.
+% 
+\footnotetext{The wrapper class can be found under the name \texttt{SmartExchange2.java} among the applicaiton source files.}
+% 
+Web3j command line tools are an extension of the Web3j library, used to automate the creation of Java file representing the Smart Contract. On top of the compiled smart contract in binary form, this Java file also includes wrapper methods to invoke the custom constructor and the methods of the contract.
 % 
 \footnotetext{\url{https://solidity.readthedocs.io/en/develop/abi-spec.html}, accessed 17-05-2018}
-
+% 
+% 
+%    ____                 _      
+%   / __ \               | |     
+%  | |  | |_ __ __ _  ___| | ___ 
+%  | |  | | '__/ _` |/ __| |/ _ \
+%  | |__| | | | (_| | (__| |  __/
+%   \____/|_|  \__,_|\___|_|\___|
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% 
 \subsubsection{Oracle}
 As noted in the State of the Art chapter (//REFERENCE TO SOTA), there are currently not many providers that offer oracle services. For the prototype there were two alternatives: implementing an own oracle or using Oraclize. We decided to go with the latter, since implementing an oracle is a complex task and it was not the focus of this project.
 
@@ -75,16 +112,25 @@ and \acrshort{ipfs}%
 together with a \textit{random} option and an option to send a query to a URL address. Another optional argument is time delay in seconds. By default, Oraclize responds to a query right away. If the delay argument is present, Oraclize will wait for specified amount of time before issuing a reply.
 
 For the smart contract to register a reply from Oraclize, it must implement a \texttt{\_\_callback} method, which will be called by an Oraclize-issued smart contact together with the result. It is in this method that the smart contract needs to handle the response.
+%
+% 
+% 
+% 
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Blockchain explorer}
 Most of the blockchain explorer providers available today have would be capable of supporting our system. Many have a defined API and most of these APIs can provide information about the balance of an address. Different providers require different format of the API query and their answers have different formatting. Since the response to the query needs to be processed by the smart contract, a simpler response that does not require extensive processing would be preferred.
 
 \begin{sloppypar}
-Examples given in State of the Art (//LINK TO SECITON) were considered as candidates. The simplest API is the \textit{Simple Query API} provided by the Blockchain.info platform. A request query to this API is a simple HTTP GET method to \texttt{https://blockchain.info/q/getreceivedbyaddress/X}, where \texttt{X} is substituted with the requested Bitcoin address. A response from this API is a HTTP OK response containing a single number -- the balance of the address in Satoshi. Blockchain.info also allows to filter out unconfirmed transactions out of the address balance. This is done by attaching \texttt{?confirmations=Y} to the end of the request endpoint, where Y is substituted with the number of desired confirmations, before a transaction is considered for the address balance. The implementation of Blockchain.info satisfies the functional requirement BE-FR-1 specified in Table \ref{tab:reqs-block-explorer} (page \pageref{tab:reqs-block-explorer}).
+Examples given in State of the Art (//LINK TO SECITON) were considered as candidates. The simplest API is the \textit{Simple Query API} provided by the Blockchain.info platform. A request query to this API is a simple HTTP GET method to \texttt{https://blockchain.info/q/getreceivedbyaddress/X}, where \texttt{X} is substituted with the requested Bitcoin address. A response from this API is a HTTP OK response containing a single number -- the balance of the address in Satoshi. Blockchain.info also allows to filter out unconfirmed transactions out of the address balance. This is done by attaching \texttt{?confirmations=Y} to the end of the request endpoint, where Y is substituted with the number of desired confirmations, before a transaction is considered for the address balance. The implementation of Blockchain.info satisfies the functional requirement BE-FR-1 specified in Table~\ref{tab:reqs-block-explorer} (page \pageref{tab:reqs-block-explorer}).
 \end{sloppypar}
-
+% 
+% 
+% 
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+% 
 \subsubsection{Communication back end}
-Since the data communication back end needs to handle made up from the users' Bitcoin and Ether offers, the number data in the database is proportional to the number of users. Most people will be carrying out one transaction at the time and database does not need to maintain history of executed transactions (since the transaction history is well captured in the Bitcoin and Ethereum blockchains), therefore we can assume that database does not need to handle more then couple of hundreds individual offers at once. This simplifies the selection of the database, since this is relatively low database load. Furthermore, as noted in the requirement section, users may still be able to agree on transaction terms via another platform outside our system, so even if the back end is not operational, the system can still be used. 
+The data processed by communication back end consists of users' Bitcoin and Ether offers. The amount of data in the database is proportional to the number of users, since most people only carry out one transaction at the time. Furthermore, the database does not need to maintain a history of executed transactions (since the transaction history is well captured in the Bitcoin and Ethereum blockchains), therefore we can assume that the database does not need to handle more then couple of hundreds individual offers at once. This simplifies the selection of the database, since this is relatively low database load. Furthermore, as noted in the requirement section, users may still be able to agree on transaction terms via another platform outside our system, so even if the back end is not operational, the system can still be used. 
 
 Database structure is not crucial factor for the database implementation. Each offer comprises the same type of data -- a single offer to buy Ether includes following details:
 \begin{itemize}[noitemsep]
@@ -96,7 +142,7 @@ Database structure is not crucial factor for the database implementation. Each o
 
 Offers for buying Bitcoin have the same pattern, but Bitcoin and Ether are exchanged and \textit{Destination Ethereum address} is replaced by \textit{Destination Bitcoin address}. The regular structure in the data indicates that an SQL database may be better fit to handle the data, on the other hand, noSQL allows for the structure to be changed easily, shall such need arise~\cite{Xplenty2017TheMedium}.
 
-For the back end platform, we decided to use Firebase, which is a noSQL database storing data in JSON format. This decision was motivated by the fact that Firebase can be easily integrated with an Android application and offers interface to push real-time date updates into the Android application. Besides storing users' offers, the back end also serves as the coordination channel for the users. We use the \texttt{offerStatus} field to indicate the progress of the transaction to primary and secondary user. Series of prompts presented to the users in the front end application changes the status of this field and enables the users to proceed with the transaction. Let us consider that the secondary user created an offer to sell Bitcoins and buy Ether. The status codes associated with this offer would be as shown in Table \ref{tab:offer-status}. When a user performs an action in the application that advances the progress of the transaction, the \texttt{offerStatus} field in the database is updated. Firebase will detect this change and push this update to the front end application of user's trading partner.
+For the back end platform, we decided to use Firebase, which is a noSQL database storing data in JSON format. This decision was motivated by the fact that Firebase can be easily integrated with an Android application and offers interface to push real-time date updates into the Android application. Besides storing users' offers, the back end also serves as the coordination channel for the users. We use the \texttt{offerStatus} field to indicate the progress of the transaction to primary and secondary user. Series of prompts presented to the users in the front end application changes the status of this field and enables the users to proceed with the transaction. Let us consider that the secondary user created an offer to sell Bitcoins and buy Ether. The status codes associated with this offer would be as shown in Table~\ref{tab:offer-status}. When a user performs an action in the application that advances the progress of the transaction, the \texttt{offerStatus} field in the database is updated. Firebase will detect this change and push this update to the front end application of user's trading partner.
 
 \begin{table}[ht]
     \centering

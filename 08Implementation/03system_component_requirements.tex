@@ -1,6 +1,6 @@
-\subsection{Requirements of system components}
+\subsection{Requirements of system components}\label{sec:component-reqs}
 
-//INTRO?
+After we established requirements for the prototype and presented final system architecture, we now describe individual requirements for each part of the system. Requirements are split into functional and non-functional requirements. We elaborate on requirements for the parts enlisted in Figure \ref{fig:system-overview}.
 
 \subsubsection{Application front end}\label{sec:app-front-reqs}
 The front end part of the proposed system has the task of receiving user's input and presenting the progress of a deployed transaction. It communicates directly with the node in order to deploy smart contracts and receive account balance and transaction hashes. Application receives data from the user (such as transaction value or destination address), verifies their validity and prepares the data in a format that can be consumed by the node. Front end also contacts the node and presents eventual replies to the user in an user-comprehensible format. If a reply is not received, the application needs to notify the user too.
@@ -25,7 +25,7 @@ The front end part of the proposed system has the task of receiving user's input
 \end{figure}
 
 \subsubsection{Ethereum Node}
-Ethereum node plays vital role in the application, as it deploys smart contracts, created by the user to the Ethereum network. If a node fails to do that, users cannot use the application for its purpose. We can say that the role of the node is \textit{business critical}. Table~\ref{fig:reqs-node} lists the reuirements for the Ethereum node.
+Ethereum node plays vital role in the application, as it deploys smart contracts, created by the user to the Ethereum network. If a node fails to do that, users cannot use the application for its purpose. We can say that the role of the node is \textit{business critical}. Table~\ref{fig:reqs-node} lists the requirements for the Ethereum node.
 
 The node needs to send transactions to the Ethereum network reliably and without delay. When queried, it must provide accurate and most up-to-date response. We can refer to these goals as trustworthiness and reliability. Since it is impossible to guarantee trustworthiness and reliability of any single node controlled by a third party, it would be in user’s best interest to operate their own node. However, operating a full node requires resources which may not be available on a mobile device.
 
@@ -51,8 +51,8 @@ In a such case, where conditions do not allow for operation of a full node, the 
 
 The consequences of nodes not fulfilling the functional requirements would be the impossibility to retrieve wallet balance, but more importantly, the impossibility to deploy smart contracts to the network. The latter would result in users not being able to use the application. Since the transaction for contract deployment is singed on user’s device, the node cannot alter transactions it receives. If user deployed a contract, but the node refused to provide transaction hash of this transaction, user’s trading partner would never transfer the second currency. The user would therefore waste funds on paying for the gas for the contract deployment, but would not lose funds as these would be transferred back after the contract timeout period has elapsed. //EXPLAIN ABOUT THIS/REFER TO EXPLANATION
 
-\subsubsection{Smart contract}
-A smart contract is deployed to the Ethereum network when the primary and secondary users agreed on a transaction. The contract is deployed by the primary user, who also carries fees necessary for the contract deployment and costs associated with services of the oracle\footnotemark.
+\subsubsection{Smart contract deployment}
+Our system deploys the smart contract to the Ethereum network when the primary and secondary users agree on a transaction. The contract is deployed by the primary user, who also carries fees necessary for the contract deployment and costs associated with services of the oracle\footnotemark.
 % 
 \footnotetext{We do not see this as an issue, since the increased costs of the primary user can be estimated beforehand and accounted for when agreeing on the transaction amount. Further analysis of this problem follows in Discussion chapter //Remember to add reference.}
 

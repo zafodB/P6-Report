@@ -1,0 +1,46 @@
+\section{Implemented requirements table}\label{sec:appendix-table}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l X c|}
+    \hline
+    \textbf{ID}&\textbf{Description}&\textbf{Implemented}\\
+    % 
+    \multicolumn{3}{|c|}{\textbf{Application front end}}\\
+    AF-FR-1&Application must deploy the smart contract to an Ethereum node.&Yes\\
+    AF-FR-2&Application must be able to query the node for address balance.&Yes\\
+    AF-FR-3&Application must display the status of the transaction.&Yes\\
+    AF-NFR-1&Transaction must be signed on device.&Yes\\
+    AF-NFR-2&Sensitive details about users' funds must not leave the device.&Yes\\
+    % 
+    \multicolumn{3}{|c|}{\textbf{Ethereum node}}\\
+    EN-FR-1&Node must support at least the following methods of the JSON-RPC protocol: \texttt{eth\_getBalance} and \texttt{eth\_sendTransaction}.&Yes\\
+    EN-NFR-1&Node should process method calls without delay.&\textbf{No}\\
+    EN-NFR-2&Node should process all method calls with equal priority.&\textbf{No}\\
+    EN-NFR-3&Node should inform the application about the outcome of the method call.&\textbf{No}\\
+    % 
+    \multicolumn{3}{|c|}{\textbf{Smart contract}}\\
+    SC-FR-1&The smart contract must implement the logic described in~\ref{fig:simple-logic}.&Yes\\
+    SC-NFR-1&The smart contract must emit en event after contract creation.&Yes\\
+    SC-NFR-2&The smart contract must cover the costs for the services of the oracle.&\textbf{No}\\
+    SC-NFR-3&The smart contract could emit an event upon receiving a response from the oracle.&Yes\\
+    % 
+    \multicolumn{3}{|c|}{\textbf{Oracle}}\\
+    OR-FR-1&The oracle must support queries to a web \acrshort{api}.&Yes\\
+    OR-NFR-1&The oracle should provide accurate and correct response to the query.&\textbf{No}\\
+    OR-NFR-2&The oracle should respond to queries without delay (unless otherwise specified).&\textbf{No}\\
+    %   
+    \multicolumn{3}{|c|}{\textbf{Blockchain explorer}}\\
+    BE-FR-1&Blockchain explorer must support an API query for address balance.&Yes\\
+    BE-NFR-1&The blockchain explorer should provide accurate and correct response to the query.&\textbf{No}\\
+    BE-NFR-2&The blockchain explorer should respond to queries without delay.&\textbf{No}\\
+    % 
+    \multicolumn{3}{|c|}{\textbf{Communication back end}}\\
+    CB-FR-1&Communication back end should be able to store users' offers.&Yes\\
+    CB-FR-1&Communication back end should assist users during the transaction process.&Yes\\
+    CB-NFR-1&The communication back end must not be able to prevent a transaction from happening.&\textbf{No}\\
+    CB-NFR-2&The communication back end must not have control over users' funds.&Yes\\
+    \hline
+    \end{tabularx}
+    % \caption{//write}
+    \label{tab:component-reqs-eval}
+\end{table}
