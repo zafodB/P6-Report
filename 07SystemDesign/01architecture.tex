@@ -1,14 +1,13 @@
 \subsection{Architecture}
 % 
-
-The issue with this approach is that Alice needs to fully trust the exchange she chose. The exchange has full control over Alice's funds since she deposited the Bitcoins until she withdraws the Ether. In the case that the exchange is attacked by hackers or is not protecting users' funds properly, Alice may never get her money back. The reputation of an exchange may provide little guidance on what exchange is trustworthy, but it is not a definite measure. In the aforementioned case of Mt. Gox, this was the most prominent exchange just weeks before its crash~\cite{Popper2014ApparentTimes}.
+The issue with this approach is that Alice needs to fully trust the exchange she chose. The exchange has full control over Alice's funds since she deposited the Bitcoins until she withdraws the Ether. When she deposits Bitcoin to the exchange, the exchange raises her Bitcoin credit balance, by the amount she deposited. When Alice makes a trade, exchange lowers of the Bitcoin credit and adds to her Ether credit, which was previously zero. The problem is, that Alice does not control her Bitcoin and Ether funds directly, she can only control the \textit{credit} in Bitcoin and Ether. The credit is the representation of Alice's funds in the computer systems of the exchange. There is no issue in this, while these systems function normally. But these systems are prone to error or attack. In the case that the exchange is attacked by hackers or is not protecting users' funds properly, Alice may never get her money back. The reputation of an exchange may provide little guidance on what exchange is trustworthy, but it is not a definite measure. In the aforementioned case of Mt. Gox, this was the most prominent exchange just weeks before its crash~\cite{Popper2014ApparentTimes}.
 
 An alternative approach for Alice could be, that she finds a person who wants to make an opposite trade to hers. Let's further assume, that Bob wants to exchange the same amount of currency from Ether to Bitcoin and that Alice can communicate with Bob by means other than the blockchains or cryptocurrency exchanges (e.g. a cryptocurrency forum). Alice and Bob need to agree on the amounts each of them is going to transfer and they need to exchange their public addresses - namely Alice needs to give Bob her Ethereum public address and Bob needs to give Alice his public Bitcoin address. Alice then sends her Bitcoins to Bob and Bob sends her Ether to Alice. This simple transaction is illustrated in figure~\ref{fig:arch-ver0}.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=.80\textwidth]{arch-ver0}
-    \caption{The naive approach to cryptocurrency exchange. Actor A (Alice) wants to buy Bitcoin (BTC) and Actor B (Bob) wants to buy Ether. }
+    \caption{The naive approach to cryptocurrency exchange. Actor A (Alice) wants to buy Bitcoin (BTC) and Actor B (Bob) wants to buy Ether. They agree on the terms of transaction via a shared channel and hope, that the other party will keep their part of the agreement.}
     \label{fig:arch-ver0}
 \end{figure}
 
@@ -35,12 +34,14 @@ Let us introduce a `black box' between Alice and Bob. This box could hold funds 
 
 In our envisioned architecture, the black box is not a third party, rather an automated system that only operates with simple internal logic. This logic should be verifiable by anyone, however, it should not be possible to manipulate this logic by any of the parties. The black box would operate on top of both blockchains and would be decentralised. It would therefore fulfil our requirement for operation without a third party and without requiring the trading parties to trust each other.
 
-This is a plausible architecture for a proposed system. It may be implemented on networks, that enable this kind of transaction control, either via multi-signature wallets (for example Bitcoin) or smart contracts (for example Ethereum). Another advantage is, that the parties now do not need to trust one another. In case of one party tries to cheat, the black box would not release the funds further.
+The advantage of this architecture is, that the parties now do not need to trust one another. In case of one party tries to cheat, the black box would not release the funds further. This system may be, in theory, implemented on networks, that enable this kind of transaction control, either via multi-signature wallets (for example Bitcoin) or smart contracts (for example Ethereum).
 
-The drawback of this architecture lies in technical complexity. The black box would need to operate on top of \textit{both} blockchains and would require coordination between two networks. The architecture could be simplified in order to remove the need to operate on two blockchains.
+In practice however, this architecture is limited by its technical complexity. The black box would need to operate on top of \textit{both} blockchains and would require coordination between the two networks. The architecture could be simplified in order to remove the need to operate on two blockchains.
 
 \subsection{Half black-box architecture}
-We can achieve similar functionality by only limiting the transaction control to one blockchain. This architecture could be referred to as `half black-box' and is illustrated in figure~\ref{fig:arch-ver2}. In this scenario, after initial agreement has been made, Alice proceeds to send funds to the half black-box. This transaction is public and can be verified by Bob. When Bob sees, that the funds are deposited in the box, he can now transfer his funds to Alice. The half black-box queries the blockchain for Bob's transaction in regular intervals. Once the transaction has been successfully included in the blockchain, the half black-box recognises this and can now release Alice's funds to Bob.
+We can maintain the same advantage as the black box, but limit the technical complexity by introducing another concept -- a half black-box. A half black-box is illustrated in in figure~\ref{fig:arch-ver2}. Still doesn't require the two parties to trust each other, but the half black-box only operates on top of one blockchain.
+
+In this scenario, after initial agreement has been made, Alice proceeds to send funds to the half black-box. This transaction is public and can be verified by Bob. When Bob sees, that the funds are deposited in the box, he can now transfer his funds to Alice. The half black-box queries the blockchain for Bob's transaction in regular intervals. Once the transaction has been successfully included in the blockchain, the half black-box recognises this and can now release Alice's funds to Bob.
 % 
 \begin{figure}[ht]
     \centering

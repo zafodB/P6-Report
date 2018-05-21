@@ -4,6 +4,9 @@ In the previous section we have described requirements on the individual system 
 % 
 % 
 % 
+%       __   __  
+%  /\  |__) |__) 
+% /~~\ |    |    
 %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Application front end} 
@@ -57,7 +60,10 @@ A screenshot of the application is shown in Figure \ref{fig:app-screenshot}.
 % 
 % 
 % 
-%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+%       __   __   ___ 
+% |\ | /  \ |  \ |__  
+% | \| \__/ |__/ |___
+%&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Node}
 As mentioned in the State of the Art \pageref{sec:eth-clients}, there are multiple Ethereum clients that can be used to deploy transactions to the network. Etherumj could be used to connect the front end application to the Ethereum network, functioning as a full network node. However, running a full node on the Android platform is not a viable solution, due to limitations of mobile devices. These limitations include storage, network bandwidth and power consumption\footnotemark.%
@@ -67,9 +73,8 @@ Fully connected node maintains a local copy of the blockchain (storage) and regu
 % 
 \footnotetext{\url{https://github.com/ethereum/wiki/wiki/Light-client-protocol}, accessed 17-05-2018}
 
-To speed up the development, we decided to use a remotely hosted node for this prototype. Instead of deploying own remote Ethereum node, a node-hosting service Infura was chosen. Upon creating an account on Infura’s website, developer is presented with a series of API endpoints – one endpoint for all major Ethereum networks (Mainnet, Kovan, Rynkeby…). Endpoints accept connections from any client and no authentication is needed. This is not an issue, since by design, the prototype signs the transaction on device, before it is deployed to the network, so the node does not have access to any sensitive data.
+To speed up the development, we decided to use a remotely hosted node for this prototype. Instead of deploying own remote Ethereum node, a node-hosting service Infura was chosen. Upon creating an account on Infura’s website, developer is presented with a series of API endpoints – one endpoint for all major Ethereum networks (Mainnet, Kovan, Rynkeby…). Endpoints accept connections from any client and no authentication is needed. This is not an issue, since by design, the prototype signs the transaction on device, before it is deployed to the network. The node therefore only processes singed transactions and does not have access to users' private keys.
 
-While running a single node is sufficient to demonstrate the idea of the prototype, more work should be put into implementing the solution with multiple nodes. In a market-ready version of the application, the centralisation implied by using a single node would pose as a major, business critical drawback. This should be one of the first issues to address in any further development of the application.
 % 
 %  __              __  ___     __   __       ___  __        __  ___ 
 % /__`  |\/|  /\  |__)  |     /  ` /  \ |\ |  |  |__)  /\  /  `  |  
@@ -94,12 +99,9 @@ Web3j command line tools are an extension of the Web3j library, used to automate
 \footnotetext{\url{https://solidity.readthedocs.io/en/develop/abi-spec.html}, accessed 17-05-2018}
 % 
 % 
-%    ____                 _      
-%   / __ \               | |     
-%  | |  | |_ __ __ _  ___| | ___ 
-%  | |  | | '__/ _` |/ __| |/ _ \
-%  | |__| | | | (_| | (__| |  __/
-%   \____/|_|  \__,_|\___|_|\___|
+%   __   __        __        ___ 
+%  /  \ |__)  /\  /  ` |    |__  
+%  \__/ |  \ /~~\ \__, |___ |___ 
 %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Oracle}
@@ -114,9 +116,10 @@ together with a \textit{random} option and an option to send a query to a URL ad
 For the smart contract to register a reply from Oraclize, it must implement a \texttt{\_\_callback} method, which will be called by an Oraclize-issued smart contact together with the result. It is in this method that the smart contract needs to handle the response.
 %
 % 
-% 
-% 
-%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+%  __        __   __        __                   
+% |__) |    /  \ /  ` |__/ /  ` |__|  /\  | |\ | 
+% |__) |___ \__/ \__, |  \ \__, |  | /~~\ | | \|
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Blockchain explorer}
 Most of the blockchain explorer providers available today have would be capable of supporting our system. Many have a defined API and most of these APIs can provide information about the balance of an address. Different providers require different format of the API query and their answers have different formatting. Since the response to the query needs to be processed by the smart contract, a simpler response that does not require extensive processing would be preferred.
@@ -126,8 +129,10 @@ Examples given in State of the Art (//LINK TO SECITON) were considered as candid
 \end{sloppypar}
 % 
 % 
-% 
-%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+%  __   __                           __       ___    __       
+% /  ` /  \  |\/|  |\/| |  | |\ | | /  `  /\   |  | /  \ |\ | 
+% \__, \__/  |  |  |  | \__/ | \| | \__, /~~\  |  | \__/ | \|
+%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Communication back end}
 The data processed by communication back end consists of users' Bitcoin and Ether offers. The amount of data in the database is proportional to the number of users, since most people only carry out one transaction at the time. Furthermore, the database does not need to maintain a history of executed transactions (since the transaction history is well captured in the Bitcoin and Ethereum blockchains), therefore we can assume that the database does not need to handle more then couple of hundreds individual offers at once. This simplifies the selection of the database, since this is relatively low database load. Furthermore, as noted in the requirement section, users may still be able to agree on transaction terms via another platform outside our system, so even if the back end is not operational, the system can still be used. 

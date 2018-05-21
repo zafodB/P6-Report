@@ -43,7 +43,6 @@ Last requirement which was not implemented is the requirement CB-NFR-1. This is 
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsubsection{Example of a transaction scenario}
 This this experiment we demonstrate a transaction between two fictitious people -- a primary user Eve, who wants to sell Ether and buy Bitcoin, and secondary user Mike, who wants to buy Ether and sell Bitcoin. Both users are running the application on their phones. Eve has her own Ethereum wallet with some Ether she wishes to sell. Mike has his own Bitcoin wallet he will use to make the transaction. Eve's and Mike's wallets are standalone systems, independent from our system. The scenario of the transaction is outlined in Figure~\ref{fig:transaction-scenario}. 
 
@@ -84,7 +83,7 @@ We successfully executed this scenario using two Android devices, a Parity Ether
 \footnotetext{We elaborate further on the cost of the transaction in the Discussion chapter (p. \pageref{sec:discussion}.)}
 
 \newgeometry{left=0.5cm,right=.5cm,top=.5cm,bottom=1cm,footskip=.4cm}
-\begin{table}[htp]
+\begin{table}[ht]
     \centering
     \begin{tabularx}{\textwidth}{|c|X|X|}
         \hline
@@ -146,35 +145,33 @@ We successfully executed this scenario using two Android devices, a Parity Ether
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Known weaknesses}
+The sample scenario demonstrated, that the system enables two users to trade Ether and Bitcoin with the use of a smart contract. However, we must note that this scenario was carried out under ``sunny day conditions''. There was no risk of losing any real currency, since the experiment was carried out on a test network. There was no attacker, attempting to disrupt the transaction process and the external services used (Infura, Oraclize, Blockchain.info and Etherscan) were all operational and honest. The two fictitious users were controlled by the developers, thus they had absolute knowledge about the system and were certain about the various features of the application and about the user interface components. Most of these issues were not addressed due to the time constrains, even though some could be solved easily.
 
-\subsubsection{Known weak spots //WORK TITLE}
-The sample scenario demonstrated, that the system enables two users to trade Ether and Bitcoin with the use of a smart contract. However, we must note that this scenario was carried out under ``sunny day conditions''. There was no risk of losing any real currency, since the experiment was carried out on a test network. There was no attacker, attempting to disrupt the transaction process and the external services used (Infura, Oraclize, Blockchain.info and Etherscan) were all operational and honest. The two fictitious users were controlled by the developers, thus they had absolute knowledge about the system and were certain about the various features of the application and about the user interface components. 
-
-We do realise, that this is not always the case and any of these conditions can be violated during regular use. In following paragraphs we describe some of the most severe issues of the system. These issues should be addressed in further development.
+We do realise, that this is not always the case and any of these conditions can be violated during regular use. In following paragraphs we describe some of the most severe issues of the system. While the system can still be used, as demonstrated above, if exploited, these issues could lead to the system being unusable or funds being lost in the worst case. These issues should be addressed in further development.
 
 \paragraph{Use of only one node}
-Using 1 node in the prototype
+The system at its current state only uses a single Infura node. The node does not have control over users funds, since the transactions are signed offline (in the Android application). However, the node could still refuse to send a transaction to a network and this way influence the transaction process. Similar issue persists, if the provider goes offline -- no users would be able to make transactions,
 
+While running a single node is sufficient to demonstrate the idea of the prototype, more work should be put into implementing the solution with multiple nodes. In a market-ready version of the application, the centralisation implied by using a single node would pose as a major, business critical drawback.
+% 
 \paragraph{Use of only one oracle and blockchain explorer}
-Using oraclize in the prototype
-Using blockchain.info in the prototype
+As noted previously, the system only uses one oracle and one blockchain explorer provider. Similarly as the Infura node, they could prevent transactions from happening, if either of the two goes offline. Additionally, the blockchain explorer and the oracle can also provide counterfeit data to the smart contract. Either of the two could alter the response to the smart contract, altering the balance on the queried account and therefore influence the behaviour of the smart contract. Using the model scenario as an example, if Mike had not transferred the Bitcoin, but instead manipulated the Blockchain.info, that the queried account does have the balance he was supposed to send, then the smart contract would release the funds to him. In similar fashion he could hypothetically manipulate the oracle, yielding the same result.
 
+A solution, where multiple oracles are queried with different blockchain explorers could make it more difficult to execute the above attack.
+% 
 \paragraph{Unsecured access to the database}
-Using unsecured database in the prototype.
+Firebase allows several options how to restrict the read and write access to the database. With the current setup however, anyone who has the database reference string (database URL) can read and write all data in the database. This is obviously not secure, since anyone could retrieve the string from the application source code and flood the database with bogus offers or delete all existing real offers. The access to the database should be limited, so that this malicious activity is prevented. This could be done by only allowing users to change offers they created and only allowing them to create a limited number of offers per hour. This issue needs to be addressed in the further releases of the application.
 
 \paragraph{Database controls the transaction flow}
-Relying on database to proceed with transaction (should be able to override)
+The current process of making a transaction is tied to the \texttt{offerStatus} codes received from the database. If users do not wish to interact through the database and decide to use another communication channel outside our system, the application should be able to handle this. Currently, however it does not allow to deploy a contract directly and all the transactions need to be created in the database, before they are picked up by the application.
 
+This functionality should be fixed in the application, where users should be able to deploy a smart contract manually (i.e. where the user selling Ether manually enters all the required data).
+% 
 \paragraph{User interface flaws}
-Major UI flaws
+There were no requirements established for the user interface, nor did the user interface undergo any user testing. There are some flaws in the user interface that make the application confusing to use. This was not addressed in this project as it is out of scope, but should be revisited in further development.
+
+Moreover, due to rather complicated transaction process (Figure \ref{fig:arch-ver2-tech}, p. \pageref{fig:arch-ver2-tech}) and importance of carrying out the steps in the correct order to maintain the desired level of security, the user should be presented with a guide upon the first application launch, which would describe the steps and guide the user through the process of making a transaction.
 
 \paragraph{Ether return policy}
-In case transaction is unsuccessful, funds are returned to the temporary address.
-
-\paragraph{Deployed contract verification}
-Difficulty checking the code correctness without reference code.
-Difficulty checking the constructor information
-
-
-
-What are the weak spots of the implemented solution? Where do we need to put more work? How
+In the prototype, user needs to use the temporary address, generate by the application, as the \textit{Import wallet} function has not been implemented. In case the secondary user does not transfer Bitcoin as agreed, the Ether funds would be returned to this temporary address. The application currently does not display private key of this temporary address, therefore the user is not able to access the returned funds. It is possible to use these funds to make another transaction, but the temporary address is lost when the user closes the application. This is an application flaw and should be fix be redesigning the user interface.
