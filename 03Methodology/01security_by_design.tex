@@ -1,0 +1,9 @@
+\subsection{Security-by-design}
+
+Generally speaking, it is usually cheaper to make a change to a system during development, rather than after it has been deployed~\cite[p. 9]{Sommerville2011SoftwareEngineering}. This also applies to security. While in some existing systems, general improvement proposals may not be executed, due to the cost factor, but security improvements cannot be avoided. Cases where system vulnerabilities lead to loss of money or data happen on regular basis for example a cryptocurrency exchange Mt. Gox~\cite{Popper2014ApparentTimes} or a shipping company Maersk~\cite{JordanNovet2017MaerskMillion}.
+
+If a system operates with money, the need of proper security measures is even more apparent. In this project, we base our motivation for this system on a fact that users can usually not verify the software used by a cryptocurrency exchange company. Some companies may conceal how their systems operate to protect their software from competitors, but others may simply rely on security-by-obscurity. Security-by-obscurity is an approach that bases the security of the system on the secrecy of its implementation and is not recommended approach~\cite{Scarfone2008GuideTechnology}. Rather than that, the opposite approach is preferred -- openness of the system, which can be reviewed security flaws can be identified by anyone.
+
+Another aspect of security-by-design is expecting malicious practices while designing the system. Attacks on the system are taken as granted, rather than possible. This provides aid when designing the system architecture and helps maintain the \textit{principle of least privilege}. This principle states, that ``\textit{a user should be given no more access to resources than it is required to complete the task at hand}''~\cite{XiaopuSpecifyingControl}. 
+
+We follow these principles, when we design the system architecture and consider that an adversary will attempt to steal funds of the users using the system.

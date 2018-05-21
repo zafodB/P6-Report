@@ -4,28 +4,21 @@
 \usepackage{titlesec}
 \usepackage[inline]{enumitem}
 \usepackage[left=2.54cm,top=3cm,right=2.54cm,bottom=3cm]{geometry}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+
 \usepackage[sorting=none, style=numeric-comp]{biblatex}
 
 \usepackage{float}
-% \usepackage[toc]{appendix}
 \usepackage{graphicx}
-% \usepackage{upgreek}
 \usepackage{tabularx}
-% \usepackage{ltablex}
-% \usepackage{tablefootnote}
 \usepackage{setspace}
-% \usepackage{longtable}
 \usepackage{framed}
-% \usepackage{eurosym}
 \usepackage{listings}
 \usepackage{epigraph}
-% \usepackage{rotating}
 \usepackage[table]{xcolor}
-\usepackage{hyperref}
 \usepackage[acronym,toc]{glossaries}
 
 \renewcommand{\arraystretch}{1.15}
-% \renewcommand{\glsnamefont}[1]{\textbf{#1}}
 
 \def\code#1{\texttt{#1}}
 
@@ -79,18 +72,18 @@
 \end{singlespacing}
 
 % \include{01Introduction/introduction}
-% \pagebreak
-% \include{02ProblemFormulation/problem_formulation}
-% \pagebreak
-% \include{03Methodology/00methodology}
-% \pagebreak
+\pagebreak
+\include{02ProblemFormulation/problem_formulation}
+\pagebreak
+\include{03Methodology/00methodology}
+\pagebreak
 % \include{04Background/00background}
 % \pagebreak
 % \include{05StateOfTheArt/00state_of_art}
 % \pagebreak
 % \include{07SystemDesign/00system_design}
 % \pagebreak
-\include{08Implementation/00implementation}
+% \include{08Implementation/00implementation}
 % \pagebreak
 % \include{09Discussion/00discussion}
 % \pagebreak
@@ -100,18 +93,18 @@
 
 \epigraph{Smart contracts are neither smart, nor contracts!}{\textit{www.stateofthedapps.com/about}}
 
-% \pagebreak
+\pagebreak
 
-\appendix
+% \appendix
 % \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
 % \input{15Appendixes/00apendixA}
 % \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
 % \input{15Appendixes/01apendixB}
 % \newgeometry{left=2cm,right=2cm,top=1cm,bottom=1cm,footskip=.4cm}
 % \input{15Appendixes/02apendixC}
-\newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
-\input{15Appendixes/03apendixD.tex}
-\restoregeometry
+% \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm,footskip=.4cm}
+% \input{15Appendixes/03apendixD.tex}
+% \restoregeometry
 % \end{appendices}
 
 
