@@ -105,7 +105,7 @@ Web3j command line tools are an extension of the Web3j library, used to automate
 %&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 % 
 \subsubsection{Oracle}
-As noted in the State of the Art chapter (//REFERENCE TO SOTA), there are currently not many providers that offer oracle services. For the prototype there were two alternatives: implementing an own oracle or using Oraclize. We decided to go with the latter, since implementing an oracle is a complex task and it was not the focus of this project.
+As noted in Section \ref{sec:data-input} (p. \pageref{sec:data-input}), there are currently not many providers that offer oracle services. For the prototype there were two alternatives: implementing an own oracle or using an off-the-shelf service. We decided to go with the latter, since implementing an oracle is a complex task and it was not the focus of this project. We chose to implement the Oraclize service, as it is currently the widely used in the community and inlcudes extensive documentation and testing environment.
 
 To implement Oraclize in a project, the smart contract must import and extend \texttt{usingOraclize} class, which is provided by Oraclize. Extending this class allows the developer to directly call \texttt{oraclize\_query} method that manages creating a query that can be understood by Oraclize servers. This method takes at least two arguments: a data source and an argument for the data source. Currently supported data sources include providers like WolframAlpha%
 \footnote{WolframAlpha is a computational knowledge engine that includes extensive collection of data, algorithms and methods. \url{http://www.wolframalpha.com/about.html}, accessed 17-05-2018}%
