@@ -1,33 +1,42 @@
 \subsection{Architecture}
 % 
-The issue with this approach is that Alice needs to fully trust the exchange she chose. The exchange has full control over Alice's funds since she deposited the Bitcoins until she withdraws the Ether. When she deposits Bitcoin to the exchange, the exchange raises her Bitcoin credit balance, by the amount she deposited. When Alice makes a trade, exchange lowers of the Bitcoin credit and adds to her Ether credit, which was previously zero. The problem is, that Alice does not control her Bitcoin and Ether funds directly, she can only control the \textit{credit} in Bitcoin and Ether. The credit is the representation of Alice's funds in the computer systems of the exchange. There is no issue in this, while these systems function normally. But these systems are prone to error or attack. In the case that the exchange is attacked by hackers or is not protecting users' funds properly, Alice may never get her money back. The reputation of an exchange may provide little guidance on what exchange is trustworthy, but it is not a definite measure. In the aforementioned case of Mt. Gox, this was the most prominent exchange just weeks before its crash~\cite{Popper2014ApparentTimes}.
-
-An alternative approach for Alice could be, that she finds a person who wants to make an opposite trade to hers. Let's further assume, that Bob wants to exchange the same amount of currency from Ether to Bitcoin and that Alice can communicate with Bob by means other than the blockchains or cryptocurrency exchanges (e.g. a cryptocurrency forum). Alice and Bob need to agree on the amounts each of them is going to transfer and they need to exchange their public addresses - namely Alice needs to give Bob her Ethereum public address and Bob needs to give Alice his public Bitcoin address. Alice then sends her Bitcoins to Bob and Bob sends her Ether to Alice. This simple transaction is illustrated in figure~\ref{fig:arch-ver0}.
+Let us consider that Alice wants to exchange Bitcoin for Ether. She would first find a \acrfull{dce} that operates with both Bitcoin and Ether. She would need to create an account with that exchange and deposit her Bitcoins to that exchange's Bitcoin address. She could then trade the the Bitcoins for the Ether on the exchange's web-page with other registered users. Afterwards, she would withdraw the newly-acquired Ether from her exchange account to her private Ethereum wallet. As we learned in Section~\ref{sec:exchanges}, this is the standard procedure. Figure~\ref{fig:arch-ver-exch} shows this standard approach.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.80\textwidth]{arch-ver0}
-    \caption{The naive approach to cryptocurrency exchange. Actor A (Alice) wants to buy Bitcoin (BTC) and Actor B (Bob) wants to buy Ether. They agree on the terms of transaction via a shared channel and hope, that the other party will keep their part of the agreement.}
+    \includegraphics[width=\textwidth]{arch-ver-exch}
+    \caption{Exchange of currencies using a third party -- a \acrfull{dce}. The process begins by both Alice and Bobs depositing their respective currencies to the \acrshort{dce}. \acrshort{dce} then facilitates the trade of currencies and Alice and Bob can then withdraw their funds from the \acrshort{dce}.}
+    \label{fig:arch-ver-exch}
+\end{figure}
+% 
+The issue with this approach is that Alice needs to fully trust the \acrshort{dce} she chose. This exchange has full control over Alice's funds since she deposited the Bitcoins until she withdrawn the Ether. When she deposits Bitcoin to the exchange, the exchange raises her Bitcoin credit balance, by the amount she deposited. When Alice makes a trade, exchange lowers of the Bitcoin credit and adds to her Ether credit, which was previously zero. The problem is, that Alice does not control her Bitcoin and Ether funds directly, she can only control the \textit{credit} in Bitcoin and Ether. The credit is the representation of Alice's funds in the computer systems of the exchange. There is no issue with such approach, while these systems function normally. But these systems are prone to error or attack, as we saw in the case of Mt. Gox~\cite{Popper2014ApparentTimes}. In the case that the \acrshort{dce} is attacked by hackers or is not protecting users' funds properly, Alice may never get her money back. The reputation of a \acrshort{dce} may provide little guidance on what exchange is trustworthy, but it is not a definite measure. In the aforementioned case of Mt. Gox, this was the most prominent exchange just weeks before its crash~\cite{Popper2014ApparentTimes}.
+
+An alternative approach for Alice could be that she finds a person who wants to make an opposite trade to hers. Let's further assume, that Bob wants to exchange the same amount of currency from Ether to Bitcoin and that Alice can communicate with Bob by means other than the blockchains or cryptocurrency exchanges (e.g. a cryptocurrency forum). Alice and Bob need to agree on the amounts each of them is going to transfer and they need to exchange their public addresses - namely Alice needs to give Bob her Ethereum public address and Bob needs to give Alice his public Bitcoin address. Alice then sends her Bitcoins to Bob and Bob sends her Ether to Alice. This simple transaction is illustrated in figure~\ref{fig:arch-ver0}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.8\textwidth]{arch-ver0}
+    \caption{The naive approach to cryptocurrency exchange. Alice wants to buy Bitcoin (BTC) and Bob wants to buy Ether. They agree on the terms of transaction via a shared channel and hope, that the other party will keep their part of the agreement.}
     \label{fig:arch-ver0}
 \end{figure}
 
 This removes the need to involve a third party in the transaction, but it does not completely solve the problem of trust. Since Alice and Bob might be located in different locations, it may be very difficult if not impossible, to ensure that the other party carries out the transaction as agreed. If Alice sends the funds to Bob, but Bob does not keep his side of the agreement and does not send his funds to Alice, it would be impossible for her to reverse the transaction. 
 
-In an attempt to ensure that both keep their agreement, Alice and Bob could synchronise the moment when they send their transactions to the network. However, this does also not provide a fail-proof solution. For instance, Bob could subsequently send another transaction (transferring his funds to himself) from the same address, which could be processed by the network first, thus rendering the original transaction invalid.
+In an attempt to ensure that both keep their agreement, Alice and Bob could synchronise the moment when they send their transactions to the network. However, this does also not provide a fail-proof solution. For instance, Bob could subsequently send another transaction from the same address which, if processed first, would render the original transaction invalid.
 
 \paragraph{Identification} 
 If Alice did not receive the funds as agreed, she might want to involve traditional law-enforcement methods. But since the agreement happened over the internet, it may not be possible to successfully identify Bob.
 
 When a reliable identification of an institution (such as an e-shop) is needed, the concept of public-key certificates has proven useful. The institution engages with a trusted third party, which then verifies the identity of this institution. Afterwards, the third party issues a certificate, that proves the identity of the institution to the visitors from the web, usually for a limited period of time~\cite{Lee2013SecurityArchitects}. 
 
-However, for a peer-to-peer relationship, digital certificates do not seem feasible, because the process of verification of someone's identity in real world is a lengthy process. We can now see the emerging need for a system, which does not require trusting a third party, nor trusting the trading partner. In this project, we propose and implement a decentralised system running on a blockchain might be the solution to this problem. Before we present the final architecture, we will first describe on a higher-level, how such system could operate.
+However, for a peer-to-peer relationship, digital certificates do not seem feasible, because the process of verification of someone's identity in real world is a lengthy process. We can now see the emerging need for a system, which does not require trusting a third party, nor trusting the trading partner. 
 
 \subsection{Black box architecture}
-Let us introduce a `black box' between Alice and Bob. This box could hold funds from both parties and only release them under condition, that both Alice and Bob sent their respective amount. If one of them tried to cheat, the box would not release the funds further. The black box architecture is illustrated in figure~\ref{fig:arch-ver1}.
+As a first high-level architecture, we could imagine the exchange system as being a black box that Alice and Bob can use for their cryptocurrency exchange. This box could hold funds from both parties and only release them under condition, that both Alice and Bob sent their respective amount. If one of them tried to cheat, the box would not release the funds further. The black box architecture is illustrated in Figure~\ref{fig:arch-ver1}.
 % 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.80\textwidth]{arch-ver1}
+    \includegraphics[width=\textwidth]{arch-ver1}
     \caption{Black box architecture. The black box spans both blockchains and only releases the funds, if it received the full amount from both parties.}
     \label{fig:arch-ver1}
 \end{figure}
@@ -45,7 +54,7 @@ In this scenario, after initial agreement has been made, Alice proceeds to send 
 % 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.80\textwidth]{arch-ver2}
+    \includegraphics[width=\textwidth]{arch-ver2}
     \caption{Half black-box architecture. The box only controls funds on one of the blockchains. The transaction on the other blockchain happens normally. The box queries the blockchain for this transaction, and only releases the funds once it has been processed.}
     \label{fig:arch-ver2}
 \end{figure}
@@ -64,16 +73,18 @@ class half-black-box {
 		forward funds to destination;
 	else
 		return funds to sender;
-	}
+}
     \end{lstlisting}
     \end{framed}
     \caption{High-level notation of the logic inside a half black-box.}
     \label{fig:simple-logic}
 \end{figure}
 
-//Research indicates that/As we learned in SOTA// there are multiple systems capable of operating the logic of a black box in a decentralised manner. Smart contracts operating on the Ethereum network are only one of such technologies, but for simplicity we will further consider that the half black-box operates on the Ethereum blockchain. Ethereum network was chosen because Ethereum is the second largest cryptocurrency by market capitalisation and offers extensive documentation, as well as variety of native clients and contract writing environments. The major drawback of this decision is that Ethereum needs to be one of the two networks involved in the transaction, which would be a significant limitation in a market-ready product. However, for the sake of this prototype, half black-box implementation on only one network should be sufficient. Bitcoin was chosen as the other trade currency, mainly due to good documentation and variety of available services. This has little practical implications on the operation of the half black-box.
+There are multiple systems that are capable of operating the logic of a black box in a decentralised manner -- smart contracts operating on the Ethereum network are only one of such technologies. 
 
-A trading scenario between Alice and Bob is illustrated in Figure~\ref{fig:ethereum-case}. Figure~\ref{fig:arch-ver2-tech} provides overview of the system architecture with Ethereum and Bitcoin as the two networks involved in the transaction.
+However, since smart contracts are in the centre of our focus, as specified by our problem formulation, we will further consider that the half black-box operates on the Ethereum blockchain. The major drawback of this decision is that Ethereum needs to be one of the two networks involved in the transaction, which would be a significant limitation in a market-ready product. However, for the sake of this prototype, half black-box implementation on only one network should be sufficient. Bitcoin was chosen as the other trade currency, mainly due to good documentation and variety of available services. This has little practical implications on the operation of the half black-box.
+
+A trading scenario between Alice and Bob is illustrated in Figure~\ref{fig:ethereum-case}. Figure~\ref{fig:arch-ver2-tech} provides an overview of the system architecture with Ethereum and Bitcoin as the two networks involved in the transaction.
 
 \begin{figure}[ht]
     \begin{framed}
@@ -90,28 +101,28 @@ A trading scenario between Alice and Bob is illustrated in Figure~\ref{fig:ether
     \textbf{Post-conditions}: Alice has Bob’s Bitcoin, Bob has Alice’s Ether.
 
     \end{framed}
-    \caption{Trading scenario, where half black-box is implemented as a smart contract on the Ethereum network and the traded currencies are Ether and Bitcoin. Half black-box/smart contract operates the logic described in figure~\ref{fig:simple-logic}.}
+    \caption{Trading scenario, where half black-box is implemented as a smart contract on the Ethereum network and the traded currencies are Ether and Bitcoin. Half black-box/smart contract operates the logic described in Figure~\ref{fig:simple-logic}.}
     \label{fig:ethereum-case}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.90\textwidth]{arch-ver2-tech}
-    \caption{System architecture, reflecting the scenario in figure~\ref{fig:ethereum-case}}
+    \includegraphics[width=\textwidth]{arch-ver2-tech}
+    \caption{System architecture, reflecting the scenario in Figure~\ref{fig:ethereum-case}}
     \label{fig:arch-ver2-tech}
 \end{figure}
 
-This is a high-level overview of our proposed system, but the implementation of such a system needs to resolve several fundamental issues. The first problem lies in the step number 4 of the scenario in Figure \ref{fig:ethereum-case}. Ethereum and Bitcoin blockchains are two separate entities, that operate on different networks, with different protocols and that do not share a common communication interface. Both systems are isolated in their respective realms and do not interact during normal operation\footnotemark. The half black-box would reside on the Ethereum blockchain, but to verify Bob’s transaction, would need to get data from Bitcoin blockchain. Since currently there is no client that supports both blockchains and could operate on the two networks simultaneously, the half black-box needs to learn about the transaction via a shared channel.
+This is a high-level overview of our proposed system, but the implementation of such a system needs to resolve several fundamental issues. The first problem lies in the step number 4 of the scenario in Figure \ref{fig:ethereum-case}. Ethereum and Bitcoin blockchains are two separate entities, that operate on different networks, with different protocols and that do not share a common communication interface. Both systems are isolated in their respective realms and do not interact during normal operation\footnotemark. The half black-box resides on the Ethereum blockchain, but to verify Bob’s transaction, it would need to get data from the Bitcoin blockchain. Since currently there is no client that supports both blockchains and could operate on the two networks simultaneously, the half black-box needs to learn about the transaction via some shared channel.
 % 
 \footnotetext{\url{https://blog.oraclize.it/understanding-oracles-99055c9c9f7b}, accessed 03-05-2018}
 
 \subsubsection{Learning the state of the transaction}
-Both networks operate on a peer-to-peer basis, and peers use the public internet to communicate with each other. Internet is therefore a plausible shared channel, that could be used by the half black-box to learn about the state of the transaction. There are services that allow the user to query the status of the Bitcoin blockchain by querying their own nodes, that are part of the network and presenting the result in a web interface or \acrshort{api}. \textit{Blockchain.info}, \textit{blockexplorer.com} or \textit{live.blockcypher.com} are examples of such services on the Bitcoin network, \textit{Etherscan.com} is an example on the Ethereum network. The half black-box could use such service to learn the status of the Bitcoin blockchain and make a decision to release or return the funds.
+Both networks operate on a peer-to-peer basis, and peers use the public internet to communicate with each other. Internet is therefore a plausible shared channel, that could be used by the half black-box to learn about the state of the transaction. As we learned in the Section \ref{sec:block-explorers} (p. \pageref{sec:block-explorers}), the blockchain explorers offer services that allow the user to query the status of the Bitcoin blockchain. The half black-box could use such a service to learn the status of the Bitcoin blockchain and make a decision to release or return the funds.
 
-Using a particular service to fetch the data from the blockchain introduces a major drawback to our solution -- centralisation. If we rely on one particular provider to learn about a status of a Bitcoin transaction, we are exposing the system to a risk, that this provider will not provide accurate and up-to-date data, either knowingly (trying to sabotage the process) or unknowingly (by mistake). Considering the scenario in Figure~\ref{fig:ethereum-case}, such provider could easily halt the transaction, by providing negative answer to the query of the smart contract in step 4. This goes against the idea of a decentralised money exchange platform. A plausible solution to this problem would be to query several providers and accept the answer of the majority, to lower the possibility of an single faulty result.
+Using a particular service to fetch the data from the blockchain introduces a major drawback to our solution -- centralisation. If we rely on one particular provider to learn about the status of a Bitcoin transaction, we are exposing the system to a risk, that this provider will not provide accurate and up-to-date data, either knowingly (trying to sabotage the process) or unknowingly (by mistake). Considering the scenario in Figure~\ref{fig:ethereum-case}, such provider could easily halt the transaction, by providing negative answer to the query of the smart contract in step 4. This goes against the idea of a decentralised money exchange platform. A plausible solution to this problem would be to query several providers and accept the answer of the majority to lower the possibility of an single faulty result.
 
 \subsubsection{Inputting data to Ethereum network}\label{sec:data-input}
-The second major problem that the system implementation needs to tackle, is the deterministic nature of the blockchain. The blockchain is built in such way, that all of the transactions need to produce the same outcome at any time. In other words, a node that joins the Ethereum network several years later, still needs to be able to recalculate all the transactions and reach the same outcome as the nodes do today. Consider the scenario in figure~\ref{fig:ethereum-case}, where a Node~A, executing the smart contract successfully queried the Bitcoin blockchain, learned that Bob made the Bitcoin transfer, and therefore released Ether to Alice. If a Node~B joins the Ethereum network at other time, it cannot be guaranteed that it will reach the Bitcoin blockchain and obtain the same result as Node~A. Hence, it cannot verify, whether if the release of Ether to Alice was legitimate.
+The second major problem that the system implementation needs to tackle, is the deterministic nature of the blockchain. The blockchain is built in such a way that all of the transactions need to produce the same outcome at any time. In other words, a node that joins the Ethereum network several years later, still needs to be able to recalculate all the transactions and reach the same result as the nodes do today. Consider the scenario in Figure~\ref{fig:ethereum-case}, where a Node~A, executing the smart contract successfully queried the Bitcoin blockchain, learned that Bob made the Bitcoin transfer, and therefore released Ether to Alice. If a Node~B joins the Ethereum network at a later time, it cannot be guaranteed that it will successfully reach the Bitcoin blockchain and obtain the same result as Node~A. In such case, it cannot verify, whether the release of the Ether to Alice was legitimate.
 
 The solution to this problem is provided by \textit{oracles}, which are specialised data sources that translate real-world, off-chain information into data that can be processed by the smart contract. Oracles watch the blockchain for events and respond to them by publishing the results of a query back to the smart contract~\cite{JohnWeldon2016BuildingContract}. \textit{Event} is a special type of log message, that is emitted from a contract when its state changes. Programmers can choose if and when they want to emit an event, while they write the code of the smart contract. Events can be listened for by any of the nodes, using the \code{eth\_newFilter} and \code{eth\_getFilterChanges} methods defined in the JSON-RPC specification\footnotemark, which is a standard part of commonly used nodes (such as Parity or GEth). A simple oracle could be a server that listens for these events on the Ethereum network, fetches the real-world data and then delivers them back to the contract, sending them as a part of a transaction~\cite{JulesDourlens2017Oracles:Blockchain, 2018OraclizeDocumentation}. 
 % 
@@ -124,13 +135,18 @@ The solution to this problem is provided by \textit{oracles}, which are speciali
     \label{fig:oracles-principle}
 \end{figure}
 
-Currently, there is are several providers on the market, offering services of an oracle -- the biggest one being \textit{Oraclize}\footnote{\url{http://www.oraclize.it/}, accessed 22-05-2018}, which offers simple integration with the Solidity code by providing a class that the smart contract needs to extend, in order to use the functionality of an oracle. Oraclize offers queries to multiple off-chain data providers, including simple HTTP queries. Other providers include \textit{RealityKeys}\footnote{\url{https://www.realitykeys.com/}, accessed 22-05-2018}, \textit{Chainlink}\footnote{\url{https://www.smartcontract.com/}, accessed 22-05-2018} and \textit{Town Crier}\footnote{\url{http://www.town-crier.org/}, accessed 22-05-2018}.
+Currently, there is are several providers on the market, offering services of an oracle -- the biggest one being \textit{Oraclize}\footnote{\url{http://www.oraclize.it/}, accessed 22-05-2018}, which offers simple integration with the Solidity code by providing a class that the smart contract needs to extend, in order to use the functionality of an oracle. Oraclize offers queries to multiple off-chain data providers, including simple HTTP queries. Other providers include \textit{RealityKeys}, \textit{Chainlink} and \textit{Town Crier}\footnotemark.
+% 
+\footnotetext{
+\url{https://www.realitykeys.com/}\\
+\url{https://www.smartcontract.com/}\\
+\url{http://www.town-crier.org/}, all accessed 22-05-2018}
 % 
 
 \subsubsection{Learning status of a transaction}
 According to the logic of the half black-box, the smart contract must check that the currency was transferred from Bob to Alice. The most direct way to check whether a transaction happened and whether it was made with the correct details (amount and destination address) is to find the transaction by the transaction hash. Transaction hash is a unique identifier and can be reliably used to locate a transaction and details associated with it. However, when the smart contract is created, a transaction hash of the Bitcoin transaction is not yet known.
 % 
-A possible solution would be to monitor balance on an existing address that belongs to Alice. If Alice already owns a Bitcoin wallet with balance of 1.5 Bitcoins and she agrees with Bob that she will receive 0.5 Bitcoins in the transaction. Smart contract can then monitor the address of Alice's wallet and if it reaches balance of 2.0 Bitcoins, the smart contract releases the Ether. However, if Cyril, a friend of Alice, would transfer 0.5 Bitcoins to her at the same time (e.g. to return money he borrowed earlier), not knowing that she engaged in a transaction with Bob, smart contract would notice that the balance on the account is now 2.0 Bitcoins and would release the funds to Bob, supposing it was Bob who transferred the funds as a part of the transaction. Similar problem arises if Alice is a shop. The approach with a known wallet address would therefore not work. To avoid similar problems, Alice should generate a new Bitcoin address for every transaction she engages. This way, there is no risk that the smart contract will pick up Cyril's transaction, because Cyril does not know the newly created Bitcoin address\footnotemark.
+A possible solution would be to monitor balance on an existing address that belongs to Alice. If Alice already owns a Bitcoin wallet with balance of 1.5 Bitcoins and she agrees with Bob that she will receive 0.5 Bitcoins in the transaction. Smart contract can then monitor the address of Alice's wallet and if it reaches balance of 2.0 Bitcoins, the smart contract releases the Ether. However, if Cyril, a friend of Alice, would transfer 0.5 Bitcoins to her at the same time (e.g. to return money he borrowed earlier), not knowing that she engaged in a transaction with Bob, smart contract would notice that the balance on the account is now 2.0 Bitcoins and would release the funds to Bob, supposing that it was Bob who transferred the funds as a part of the transaction. Similar problem arises if Alice is a shop and receives many transactions from various parties. To avoid similar problems, Alice should generate a new Bitcoin address for every transaction she engages in. This way, there is no risk that the smart contract will pick up Cyril's transaction, because this newly created public Bitcoin address is never disclosed to anyone else, but Bob\footnotemark.
 % 
 \footnotetext{Address reuse is generally not a recommended practice. Current Bitcoin wallets usually prevent users from using the same address twice and offer an automated way of managing newly created addresses.
 

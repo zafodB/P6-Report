@@ -1,16 +1,7 @@
 \section{System Design}\label{sec:system-design}
 % 
-//Chapter introduction to be written
+In this chapter we analyse, how the cryptocurrency exchange process could be improved. We begin by presenting the current process and identifying the possible issues. We then attempt to find a solution to these issues, by presenting another version of the process. In similar fashion we continue until we reach an architecture where the most severe issues are resolved and which could be implemented in a technical system. There are three iterations of this process.
 
-There are several possibilities, one wants to exchange cryptocurrency on the internet. Let's consider, that Alice wants to exchange Bitcoin for Ether. She would first find a \acrfull{dcex} that operates with both Bitcoin and Ether. She would probably need to create an account with that exchange and deposit her Bitcoins to that exchange's Bitcoin address. She could then trade the the Bitcoins for the Ether on the exchange's web-page with other registered users. Afterwards, she would withdraw the newly-acquired Ether from her exchange account to her private Ethereum wallet. This is the standard procedure, \textbf{as we learned in the State of the Art. //CHECK THIS} Figure~\ref{fig:arch-ver-exch} shows this standard approach.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=.80\textwidth]{arch-ver-exch}
-    \caption{Exchange of currencies using a third party -- a \acrfull{dcex}. The process begins by both Alice and Bobs depositing their respective currencies to the \acrshort{dcex}. \acrshort{dcex} then facilitates the trade of currencies and Alice and Bob can then withdraw their funds from the \acrshort{dcex}.}
-    \label{fig:arch-ver-exch}
-\end{figure}
-% 
 \input{07SystemDesign/01architecture}
 
 \input{07SystemDesign/02conclusion}

@@ -25,7 +25,7 @@ The front end part of the proposed system has the task of receiving user's input
 \end{figure}
 
 \subsubsection{Ethereum Node}
-Ethereum node plays vital role in the application, as it deploys smart contracts, created by the user to the Ethereum network. If a node fails to do that, users cannot use the application for its purpose. We can say that the role of the node is \textit{business critical}. Table~\ref{fig:reqs-node} lists the requirements for the Ethereum node.
+The Ethereum node plays a vital role in the application, as it deploys the smart contracts created by the user to the Ethereum network. If a node fails to do that, users cannot use the application for its purpose. It is clear that the role of the node is \textit{business critical}. Table~\ref{fig:reqs-node} lists the requirements for the Ethereum node.
 
 The node needs to send transactions to the Ethereum network reliably and without delay. When queried, it must provide accurate and most up-to-date response. We can refer to these goals as trustworthiness and reliability. Since it is impossible to guarantee trustworthiness and reliability of any single node controlled by a third party, it would be in user’s best interest to operate their own node. However, operating a full node requires resources which may not be available on a mobile device.
 
@@ -107,7 +107,7 @@ Functional and non-functional requirements on the oracle are listed in Table~\re
 \end{table}
 
 \subsubsection{Blockchain explorer}
-As explained above, a smart contract needs to receive details about a Bitcoin transaction to decide whether it can release the Ether to its destination. However, the smart contract cannot directly communicate with any data sources that are outside the Ethereum blockchain, neither can Ethereum nodes learn the status of the Bitcoin blockchain\footnotemark.
+As described above, a smart contract needs to receive details about a Bitcoin transaction to decide whether it can release the Ether to its destination. However, the smart contract can not directly communicate with any data sources that are outside the Ethereum blockchain, neither can Ethereum nodes learn the status of the Bitcoin blockchain\footnotemark.
 % 
 \footnotetext{Currently there are no Ethereum clients offer such functionality. See section \ref{sec:eth-clients} on page \pageref{sec:eth-clients} for more details.}
 % 

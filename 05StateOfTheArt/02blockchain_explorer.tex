@@ -1,18 +1,23 @@
-\subsection{Blockchain explorers}
-Generally, it is not possible to learn about status of a blockchain (Ethereum, Bitcoin or other) unless we launch a node that directly participates in the blockchain by receiving, verifying and forwarding blocks. However, it is not always feasible to run such a node, due to the limitations mentioned earlier (Section \ref{sec:eth-clients}, p. \pageref{sec:eth-clients}). If we do not need to deploy any transactions to the network, but only need to receive information from it, we can use a \textit{blockchain explorer}.
+\subsection{Blockchain explorers}\label{sec:block-explorers}
+Generally, it is not possible to learn about the status of a blockchain (Ethereum, Bitcoin or other) unless we launch a node that directly participates in the blockchain by receiving, verifying and forwarding blocks. However, it is not always feasible to run such a node, due to the limitations mentioned earlier (Section \ref{sec:eth-clients}, p. \pageref{sec:eth-clients}). If we do not need to deploy any transactions to the network, but only need to receive information from it, we can use a \textit{blockchain explorer}\footnotemark.
+% 
+\footnotetext{At the time of writing, there is no consensus on the use of terms \textit{blockchain explorer} and \textit{block explorer}. Websites offering such services use these terms to market themselves. On the other hand other papers, such as \cite{Kuzuno2017BlockchainBitcoin} use these terms in a different context. In this report, we keep using the term \textit{blockchain explorer} to refer to services that offer access to information from the blockchain.}
 
-A blockchain explorer is a service that participates in the blockchain and exposes its information publicly, so that even parties that are not running a network node can see the information contained in the blockchain\footnotemark. Such information may include transactions, unspent outputs, deployed contracts and other data, usually only visible to participating nodes. 
-% 
-\footnotetext{At the time of writing, there is no consensus on the use of terms \textit{blockchain explorer} and \textit{block explorer}. Websites offering such services use these terms to market themselves. On the other hand other papers, such as \cite{Kuzuno2017BlockchainBitcoin} use these terms in a different context.}
-% 
-General cryptocurrency users and services built on top of the blockchain are the most common users of the blockchain explorers\footnotemark.
+A blockchain explorer is a service that participates in the blockchain and exposes its information publicly, so that even those parties that are not running a network node can see the information contained in the blockchain. Such information may include transactions, unspent outputs, deployed contracts or other data, usually only visible to the participating nodes. General cryptocurrency users and services, built on top of the blockchain, are the most common users of the blockchain explorers\footnotemark.
 %
 \footnotetext{\url{https://blockchain.info/api}, \url{https://www.blockchain.com/about/index.html}, accessed 12-05-2018}
 
-There are several providers that offer blockchain explorer services. Web interfaces, allowing users to search for and browse transactions and addresses, as well as \acrshort{api}s offering limited number of methods defined by JSON-RPC, are both common practices. Some examples on of providers offering these services are \textit{Blockchain}\footnote{To avoid confusion with the concept of the blockchain as a distributed ledger, we will refer to this provider as \textit{Blockchain.info} for the rest of this report.
+There are several providers that offer blockchain explorer services. Web interfaces, allowing users to search for and browse transactions and addresses, as well as \acrshort{api}s offering selected number of methods defined by JSON-RPC, are both common practices. Some examples of the providers offering these services are \textit{Blockchain}\footnote{To avoid confusion with the concept of the blockchain as a distributed ledger, we will refer to this provider as \textit{Blockchain.info} for the rest of this report.
 
-\url{https://blockchain.info/}, accessed 12-05-2018}, \textit{Block Explorer}\footnote{\url{https://blockexplorer.com/}, accessed 12-05-2018} and \textit{Block Cypher}\footnote{\url{https://live.blockcypher.com/btc/}, accessed 12-05-2018} for the Bitcoin network and Etherscan\footnote{\url{https://etherscan.io/}, accessed 21-05-2018}, Etherchain\footnote{\url{https://www.etherchain.org/}, accessed 21-05-2018}
-or Ethplorer\footnote{\url{https://ethplorer.io/}, accessed 21-05-2018} on the Ethereum network. Table \ref{tab:block-explorers} sumarizes the examples on both networks. Infura could also be used as a blockchain explorer, since it is hosted remotely and can provide data about blockchain.
+\url{https://blockchain.info/}, accessed 12-05-2018}, \textit{Block Explorer} and \textit{Block Cypher} for the Bitcoin network and \textit{Etherscan}, \textit{Etherchain} or \textit{Ethplorer}\footnotemark on the Ethereum network. Table \ref{tab:block-explorers} summarises the examples on both networks. Infura could also be used as a blockchain explorer, since it is hosted remotely and can provide data about blockchain.
+% 
+\footnotetext{
+\url{https://blockexplorer.com/}\\
+\url{https://live.blockcypher.com/btc/}\\
+\url{https://etherscan.io/}\\
+\url{https://www.etherchain.org/}\\
+\url{https://ethplorer.io/}, all accessed 21-05-2018
+}
 
 \begin{table}[ht]
     \centering
@@ -32,7 +37,7 @@ or Ethplorer\footnote{\url{https://ethplorer.io/}, accessed 21-05-2018} on the E
         \textit{Infura}&&\textit{Yes}\\
         \hline
     \end{tabular}
-    \caption{Various blockchain explorers on Bitcoin and Ethereum network. Infura is also listed, because it can also be used as a blockchain explorer (if the node is only used to retrieve data from the blockchain).}
+    \caption{Various blockchain explorers on the Bitcoin and Ethereum networks. Infura is also listed, because it can also be used as a blockchain explorer (if the node is only used to retrieve data from the blockchain).}
     \label{tab:block-explorers}
 \end{table}
 

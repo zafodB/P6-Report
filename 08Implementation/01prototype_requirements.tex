@@ -1,13 +1,13 @@
 \subsection{System requirements}\label{sec:system-reqs}
 
-In this section, we describe the desired behaviour of the system, using functional and non-functional requirements. In the first part, functional requirements are used to describe the intended functionality of the system as a whole, as seen from user's perspective. In the second part, we capture important characteristics of the system, using non-functional requirements.
+In this section, we describe the desired behaviour of the system, using functional and non-functional requirements. In the first part, functional requirements are used to describe the intended functionality of the system as a whole, as seen from user's perspective. In the second part, we capture important characteristics of the system, using the non-functional requirements.
 
 \subsubsection{Functional requirements}
-Usually, functional requirements would come from the users of the system, product owner and other stakeholders. In this project, the authors took the role of the product owner and envisioned the first set of requirements. This first set made up the prototype requirements. In further releases, users and other stakeholders would likely need to be considered.
+Usually, functional requirements come from the users of the system, product owner and other stakeholders~\cite{Sommerville2011SoftwareEngineering}. In this project, the authors took the role of the product owner and envisioned the first set of functions that should be demonstrated by the prototype. This first set of functions made up the prototype requirements. In further releases, users and other stakeholders would likely need to be considered in the requirement elicitation process.
 
 % we list the requirements for the prototype, so that the idea can be demonstrated clearly. Requirements necessary for demonstrating the idea were prioritised, the others were not worked upon. We ranked the requirements by their importance and then sorted them in a MoSCoW table. We used this table to prioritise the areas for implementation. In a market-ready product, many requirements would most likely be different.
 
-The idea of the system is to allow users trade Ether for another cryptocurrency, which is Bitcoin in this case. Both the user that sells Ether and buys Bitcoin (in previous chapter also referred to as \textit{Alice}) and the user that buys Ether and sells Bitcoin (previously referred to as \textit{Bob}) interact with the same application. For clarity, for the rest of this chapter, we will refer to the Ether selling user as \textit{primary user} and their trading partner (Ether buying user) as \textit{secondary user}.
+The idea of the system is to allow users trade Ether for another cryptocurrency, which in our case is Bitcoin. Both the user that sells Ether and buys Bitcoin (in previous chapter also referred to as \textit{Alice}) and the user that buys Ether and sells Bitcoin (previously referred to as \textit{Bob}) interact with the same application. For clarity, for the rest of this chapter, we will refer to the Ether selling user as the \textit{primary user} and their trading partner (Ether buying user) as the \textit{secondary user}.
 
 The requirements for the prototype were selected in such way, so that the overall idea of the system can be demonstrated. The main functionality of the prototype is to allow two users exchange Bitcoin and Ether, using a smart contract on the Ethereum network. This contract forms the basis of the idea and the prototype needs to be able to deploy this contract to the network. Users should be able to verify the status of their transaction and to verify the deployment of the contract. In case the transaction is not carried out as agreed, the primary user needs to receive their funds back. While not critical, it would also be desired if the users could agree on the terms of the transaction within the application. These requirements are shown in Table \ref{tab:pt-func-reqs}. 
 
@@ -30,7 +30,7 @@ The requirements for the prototype were selected in such way, so that the overal
     \end{table}
 % 
 \subsubsection{Non-functional requirements}
-The overall goal is to develop a secure solution, that does not allow a malicious actor to gain control over other users' funds. To achieve this, the architecture envisioned in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech} should be used to carry out the transaction. Furthermore,centralisation the system should be avoided, so that the users can continue using the system even if any particular provider goes offline or is attacked. Table \ref{tab:pt-func-reqs} lists these non-functional requirements.
+Our overall goal is to develop a secure solution, that does not allow a malicious actor to gain control over other users' funds. To achieve this, the architecture envisioned in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech}) should be used to carry out the transaction. Furthermore, centralisation of the system should be avoided, so that the users can continue using the system even if any particular provider goes offline or is attacked. Table \ref{tab:pt-nonfunc-reqs} lists these non-functional requirements.
 
 \begin{table}[ht]
     \centering
@@ -38,9 +38,9 @@ The overall goal is to develop a secure solution, that does not allow a maliciou
     \hline
     \textbf{Requirement ID}&\textbf{Description}\\
     &\\
-    PT-NFR-1&The system must implement architecture proposed in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech}.\\
-    PT-NFR-2&There should not be single point of failure in the system.\\
-    PT-NFR-3&No other party should have control over the funds of primary user and secondary user.\\
+    PT-NFR-1&The system must implement the architecture proposed in Figure \ref{fig:arch-ver2-tech} (p. \pageref{fig:arch-ver2-tech}.\\
+    PT-NFR-2&There should not be a single point of failure in the system.\\
+    PT-NFR-3&No other party should have control over the funds of the primary user and secondary user.\\
     \hline
     \end{tabularx}
     

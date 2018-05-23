@@ -1,54 +1,56 @@
 \subsection{Cryptocurrency clients}\label{sec:eth-clients}
-To communicate with other peers in the network, an cryptocurrency client is needed. Such a client communicates with other clients/nodes in the same network and optionally with a front end application. During its operation, the node receives new blocks from the other nodes, verifies them and saves them to its local copy of the blockchain. It can also forward the new blocks to other nodes. Most clients offer functionality of a wallet, which means they can generate a public address and corresponding private key. These are used by the user to receive and send funds. The clients can also optionally try and find new valid block in the process known as mining.
+To communicate with other peers in the network, a cryptocurrency client is needed. Such a client communicates with other clients/nodes in the same network and optionally with a front end application. During its operation, the client receives new blocks from the other clients, verifies them and saves them to its local copy of the blockchain. It can also forward the new blocks to other clients, if requested. Most clients the offer functionality of a wallet, which means they can generate a public address and a corresponding private key. These are used by the user to receive and send funds. The clients can also participate in the process known as mining, by trying to find a new valid block by repeated hashing.
 
 For their proper functioning, clients require good network connectivity (so they can periodically receive new blocks and communicate with other nodes and enough storage space to store their local copy of the blockchain (which can be as much as 140 GB\footnotemark). Clients that participate in mining also require significant amount of processing power to try combination that would produce a valid block.
 % 
 \footnotetext{\url{https://www.statista.com/statistics/647523/worldwide-bitcoin-blockchain-size/}, accessed 21-05-2018}
 
 \subsubsection{Bitcoin}
-Together with the Bitcoin proposal (\cite{NakamotoBitcoin:System}), a reference protocol implementation, written in C++ was published, today referred to as the \textit{Satoshi Code}\footnotemark. It implemented the protocol described by the paper and allowed the first nodes to form a network. Since the protocol specification is freely available, any interested party can implement their own version of the protocol.
+Together with the Bitcoin proposal (\cite{NakamotoBitcoin:System}), a reference protocol implementation, written in C++ was published, today known as the \textit{Satoshi Code}\footnotemark. It implemented the protocol described by the paper and allowed the first clients to form a network. Since the protocol specification is freely available, any interested party can implement their own version of the protocol.
 % 
 \footnotetext{\url{https://en.bitcoin.it/wiki/Original_Bitcoin_client}, accessed 21-05-2018}
 % 
-Many Bitcoin clients exist today, targeted on different user groups. The interface, controls and features of the client reflect this. The most notable full client today is \textit{Bitcoin Core}\footnote{\url{https://github.com/bitcoin/bitcoin/}, accessed 21-05-2018}, which is continued developement of the Satoshi code by the Bitcoin community. There are also numerous ``light clients'' and ``Wallets''. A light client does not store its own local copy of the blockchain, but is still able to connect to other nodes in the network. A Wallet is a piece of software that does not necessarily connect directly to other nodes, rather it connects with a server and learns the status of the network from this server. Example of a light client is \textit{Electrum}\footnote{\url{https://electrum.org/\#download}, accessed 21-05-2018}, while example of a Wallet is \textit{MyWallet}\footnote{\url{https://blockchain.info/wallet/\#/signup}, accessed 21-05-2018}.
+Many Bitcoin clients exist today, the most notable being the C++ implementation \textit{Bitcoin Core}\footnote{\url{https://github.com/bitcoin/bitcoin/}, accessed 21-05-2018}, which is continued development of the Satoshi code by the Bitcoin community. Bitcoin core supports Windows, Linux and macOS operating systems and can be run with or without a \acrshort{gui}. Alternatives to Bitcoin core are Bitcoin Knots (also written in C++)\footnote{\url{https://github.com/bitcoinknots/bitcoin}, accessed 23-05-2018} and Gocoin, written in Go\footnote{\url{https://github.com/piotrnar/gocoin}, accessed 23-05-2018}.
+
+There are also numerous ``light clients'' and ``Wallets''. A light client does not store its own local copy of the blockchain, but is still able to connect to other nodes in the network. A Wallet is a piece of software that does not necessarily connect directly to other nodes, rather it connects with a server and learns the status of the network from this server. An example of a light client is \textit{Electrum}\footnote{\url{https://electrum.org/\#download}, accessed 21-05-2018}, while an example of a Wallet is \textit{MyWallet}\footnote{\url{https://blockchain.info/wallet/\#/signup}, accessed 21-05-2018}.
 
 \subsubsection{Ethereum}
 There are three reference implementations of the Ethereum protocol (reference clients):
 \begin{enumerate*}[label=(\roman*)]
-    \item \textit{Go Ethereum}(GEth)\footnote{\url{https://geth.ethereum.org/}, accessed 06-05-2018}, written in Go
+    \item \textit{Go Ethereum}(GEth)\footnote{\url{https://geth.ethereum.org/}, accessed 06-05-2018}, written in Go,
     \item \textit{Pyethereum}\footnote{\url{https://github.com/ethereum/pyethereum}, accessed 06-05-2018}, written in Python and
     \item \textit{Cppethereum}\footnote{\url{https://github.com/ethereum/cpp-ethereum}, accessed 06-05-2018}, written in C++.
 \end{enumerate*}
-Besides the reference clients, there are several unofficial implementations. The most widely used are \textit{Parity}, written in Rust\footnote{\url{https://parity.io/}, accessed 06-05-2018} and GEth. Table \ref{fig:eth-client-stats} compares various Ethereum clients by the number of interaction (expressed in ``Watching'', ``Starring'' and ``Forking'' the original repository on a code sharing platform GitHub). As of the time of writing, there are no native Ethereum clients for Android, but there is an implementation in Java, that could be used.
+Besides the reference clients, there are several unofficial implementations. The most widely used is \textit{Parity} which is written in Rust\footnote{\url{https://parity.io/}, accessed 06-05-2018}. Table \ref{fig:eth-client-stats} compares various Ethereum clients by their popularity among developers (expressed in ``Watching'', ``Starring'' and ``Forking'' the original repository on a code sharing platform GitHub). As of the time of writing, there are no native full Ethereum clients for mobile devices, although a Java implementation exists, which could be used on the Android OS.
 
-To communicate with a front end, the Ethereum client implements a JSON-RPC protocol to talk with the front end~\cite{Dannen2017IntroducingSolidity}. JSON is a data format that can contain numbers, strings, ordered sequences of values, and collections of name/value pairs and is defined by IETF~\cite{Crockford2006TheJSON}. RPC stands for \textit{Remote procedure call} and defines how the data are processed. The JSON-RPC protocol for Ethereum specifies number of standardised methods that should be supported by a Ethereum client\footnotemark.
+To communicate with a front end, the Ethereum client implements a JSON-RPC protocol~\cite{Dannen2017IntroducingSolidity}. JSON is a data format that can contain numbers, strings, ordered sequences of values or collections of name/value pairs; and is defined by the \acrshort{ietf}~\cite{Crockford2006TheJSON}. \acrshort{rpc} stands for \textit{Remote procedure call} and defines how the data is processed. The JSON-RPC protocol for Ethereum specifies number of standardised methods that should be supported by an Ethereum client\footnotemark.
 % 
 \footnotetext{\url{https://github.com/ethereum/wiki/wiki/JSON-RPC}, accessed 21-05-2018}
  
 \begin{figure}[ht]
     \centering
-    \begin{tabular}{|l|c|c|c|l|}
+    \begin{tabular}{|l|c|l|}
         \hline
-        \textbf{Name} & \textbf{\# Watched} & \textbf{\# Starred} & \textbf{\# Forked} & \textbf{Developer}\\
+        \textbf{Name} & \textbf{\# Watched + Starred + Forked} & \textbf{Developer}\\
         \hline
         \hline
-        go-ethereum (GEth) & 1779 & 17314 & 5516 & Ethereum Foundation\\
+        go-ethereum (GEth) &24 609& Ethereum Foundation\\
         \hline
-        pyethereum & 292 & 2330 & 696 & Ethereum Foundation\\
+        cpp-ethereum &5 460& Ethereum Foundation\\
         \hline
-        cpp-ethereum & 529 & 3030 & 1901 & Ethereum Foundation\\
+        parity &5 317& Parity Technologies\\
         \hline
-        parity & 327 & 4164 & 826 & Parity Technologies\\
+        pyethereum &3 318& Ethereum Foundation\\
         \hline
-        ethereumj & 220 & 1505 & 775 & Roman Mandeleil\\ 
+        ethereumj &2 500& Roman Mandeleil\\ 
         \hline
-        ruby-ethereum & 49 & 21 & 37 & Jan Xie\\
+        ruby-ethereum &107& Jan Xie\\
         \hline
     \end{tabular}
     \caption{Popular Ethereum clients and their statistics from the code sharing site GitHub. Data as of 02-05-2018}
     \label{fig:eth-client-stats}
 \end{figure}
  
-Besides using the mentioned clients to implement own node, developers also have a possibility to use third-party node hosting service \textit{Infura}\footnote{\url{https://infura.io/}, accessed 21-05-2018}. Infura offers free hosting of Ethereum clients on all major networks, including mainnet and test network Kovan\footnotemark. Infura nodes run either GEth or Parity and support all the standard methods defined by Ethereum JSON-RPC specification.
+Besides using the mentioned clients to implement their own node, developers also have a possibility to use a node hosting service \textit{Infura}\footnote{\url{https://infura.io/}, accessed 21-05-2018}. Infura offers free hosting of Ethereum clients on all major networks, including mainnet and test network Kovan\footnotemark. Infura nodes run either GEth or Parity and support all the standard methods defined by Ethereum JSON-RPC specification.
 % 
 \footnotetext{Test network is a network with similar properties as the main one, but where the coins hold no value. Test networks are used by developers to test their software without needing to worry about losing any real-world money. Coins for testnets can be obtained free of charge from specialised services called \textit{faucets}. There are several testnets both for Bitcoin and for Ethereum. Main Bitcoin testnet is called \texttt{testnet3}. Main Ethereum testnet (currently) is called \texttt{Kovan}.}
