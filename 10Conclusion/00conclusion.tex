@@ -1,9 +1,15 @@
 \section{Conclusion}\label{sec:conclusion}
 
-//Conclude, wrap-up the project. What was done, how it was done, what needs to be done further.
+Even though the next year will mark a decade since the inception of Bitcoin, we still see a lot of development in the field of cryptocurrencies. Some say, that Ethereum will surpass Bitcoin in the market cap by the end of 2018\footnote{\url{https://www.trustnodes.com/2018/03/03/ethereum-much-likely-not-overtake-bitcoin-year-says-roger-ver}, accessed 23-05-2018} and it is certain that new decentralised applications built on this platform will emerge. But even despite the fact that the very idea behind these cryptocurrencies is decentralisation and security through open and verifiable cryptography, we still obtain these currencies via channels that are both centralised and trust-based.
 
-In this project, we went through the process of finding an architecture for a system, that would enable trading of Bitcoin and Ethereum.  while providing the necessary level of security and lifting the requirement of trust towards a third party, such as a cryptocurrency exchange
+We have witnessed that the process of purchasing cryptocurrency via a \acrshort{dce} has weaknesses which could (and did) lead to loss of funds. In this report we followed the process of designing such a system, that would resolve these weaknesses. The system we propose is built on the Ethereum platform and uses smart contracts for the core of its operation. We designed a high-level architecture for this system, where the smart contract holds the user's funds, until a proper transaction to the other party has been made, essentially functioning as an \textit{escrow}\footnotemark service. We then investigated, how this architecture could be implemented using currently available technologies.
 
-It replaces this requirement with a trust in the Ethereum system instead. It is safe to suppose, that people who are trading Ether, unavoidably trust the Ethereum platform. However, a follow-up question is unanswered
+In the \textit{Implementation and Evaluation} section we established requirements for a system which implements this architecture and then proceeded to implement such system. This system consists of an Android application, Ethereum node, smart contract, oracle service, blockchain explorer and a communication back-end. The implementation could not avoid centralisation in all parts of the system, however with further development, this could become a truly decentralised application.
+% 
+\footnotetext{\textit{``A bond, deed, or other document kept in the custody of a third party and taking effect only when a specified condition has been fulfilled.''}, Oxford dictionary, \url{https://en.oxforddictionaries.com/definition/escrow}, accessed 23-05-2018}
 
-We successfully demonstrated the functionality of this system in the implemented prototype. We 
+In the \textit{Evaluation} section we successfully demonstrated the functionality of this system, using the implemented prototype in a model scenario, where we transferred Ether and Bitcoin between two parties on the test networks \textit{Kovan} and \textit{testnet3}. Despite several weaknesses we can envision the launch of the system to the marked. Further work will be needed to completely remove centralisation from the system and better suit the front end application to users' needs. The threats to the system are the cost of the smart contract deployment and cumbersome process of contract verification and these should ideally also be addressed, to allow for adoption of the system.
+\vfill
+\textit{This report is accompanied by the prototype source code. This code can also be found here: \url{https://github.com/zafodB/SmartExchange}.}
+
+\textit{The Android application can be also downloaded here: \url{https://play.google.com/store/apps/details?id=com.zafodb.smartexchange}}

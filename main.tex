@@ -8,6 +8,7 @@
 
 \usepackage[sorting=none, style=numeric-comp]{biblatex}
 
+\usepackage{pdfpages}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{tabularx}
@@ -15,7 +16,7 @@
 \usepackage{framed}
 \usepackage{listings}
 \usepackage{epigraph}
-\usepackage[table]{xcolor}
+% \usepackage[table]{xcolor}
 \usepackage[acronym,toc]{glossaries}
 
 \renewcommand{\arraystretch}{1.15}
@@ -57,13 +58,13 @@
 
 \makeglossaries
 
-
 %%%%%%%%%%%%%%%%%%% 
 
 \begin{document}
-% 
+
+\includepdf{cover_page}
+\includepdf{page_zero}
 \tableofcontents
-% \pagebreak
 
 \begin{singlespacing}
 \setglossarystyle{long}
